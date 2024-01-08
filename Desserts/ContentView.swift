@@ -16,6 +16,17 @@ struct ContentView: View {
             Text("Hello, world!")
         }
         .padding()
+        .task {
+            do {
+                let desserts = try await NetworkManager.shared.getDesserts()
+                let dessert = try await NetworkManager.shared.getDessertDetails(for: "53049")
+                print(desserts)
+                print()
+                print(dessert)
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
