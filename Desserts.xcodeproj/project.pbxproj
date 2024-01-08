@@ -57,8 +57,8 @@
 		521137132B4C92C200491031 /* ModelDTOs */ = {
 			isa = PBXGroup;
 			children = (
-				521137142B4C92D900491031 /* DessertDetailsDTO.swift */,
 				521137162B4C932000491031 /* DessertsDTO.swift */,
+				521137142B4C92D900491031 /* DessertDetailsDTO.swift */,
 			);
 			path = ModelDTOs;
 			sourceTree = "<group>";
