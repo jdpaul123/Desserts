@@ -11,7 +11,9 @@ import SwiftUI
 struct DessertsApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack{
+                DessertListScreen(vm: DessertListScreenViewModel())
+            }
         }
     }
 }
