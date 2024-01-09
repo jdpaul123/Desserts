@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoadingScreen: View {
+struct LoadingView: View {
     @State private var isRotating = 0.0
 
     var body: some View {
@@ -29,5 +29,5 @@ struct LoadingScreen: View {
 }
 
 #Preview {
-    LoadingScreen()
+    LoadingView()
 }

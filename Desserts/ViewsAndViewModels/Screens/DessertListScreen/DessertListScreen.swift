@@ -16,12 +16,19 @@ struct DessertListScreen: View {
     }
 
     var body: some View {
-        if !vm.isLoaded {
-            LoadingScreen()
-            .task {
-                try? await vm.fetchDesserts()
-            }
-        } else {
+        switch vm.status {
+        case .loading:
+            LoadingView()
+                .task {
+                    try? await vm.fetchDesserts()
+                }
+        case .failed:
+            PullToRefreshView()
+                .refreshable {
+                    try? await vm.fetchDesserts()
+                }
+                .banner(data: $vm.bannerData, show: $vm.showBanner)
+        case .success:
             List {
                 ForEach(vm.desserts) { dessert in
                     NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {

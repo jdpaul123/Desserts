@@ -19,7 +19,7 @@ struct DessertDetailScreen: View {
 
     var body: some View {
         if !vm.isLoaded {
-            LoadingScreen()
+            LoadingView()
             .task {
                 try? await vm.fetchDessertDetails()
             }
