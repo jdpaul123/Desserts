@@ -18,7 +18,7 @@ struct DessertListScreen: View {
     var body: some View {
         List {
             ForEach(vm.desserts) { dessert in
-                NavigationLink(destination: EmptyView() /*DessertDetailScreen(dessert: dessert)*/) {
+                NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id))) {
                     DessertListCell(vm: DessertListCellViewModel(name: dessert.name))
                 }
             }

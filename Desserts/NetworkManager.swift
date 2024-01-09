@@ -34,6 +34,7 @@ class NetworkManager {
             throw ErrorMessage.unableToComplete
         }
 
+        // TODO: Factor this out into a data service
         var dessertArray = [Dessert]()
         for dessert in desserts.desserts {
             dessertArray.append(dessert)
@@ -41,13 +42,13 @@ class NetworkManager {
         return dessertArray
     }
 
-    func getDessertDetails(for dessertID: String) async throws -> DessertDetailsWrapperDTO {
+    func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
         let endpoint = "\(baseURLString)lookup.php?i=\(dessertID)"
         guard let url = URL(string: endpoint) else {
             throw ErrorMessage.invalidURL
         }
 
-        let dessertDetailsDTO: DessertDetailsWrapperDTO
+        let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
@@ -55,7 +56,7 @@ class NetworkManager {
             }
             let decoder = JSONDecoder()
             do {
-                dessertDetailsDTO = try decoder.decode(DessertDetailsWrapperDTO.self, from: data)
+                dessertDetailsWrapperDTO = try decoder.decode(DessertDetailsWrapperDTO.self, from: data)
             } catch {
                 throw ErrorMessage.invalidData
             }
@@ -63,6 +64,40 @@ class NetworkManager {
             throw ErrorMessage.unableToComplete
         }
 
-        return dessertDetailsDTO
+        // TODO: Factor this out into a data service
+        let dessertDetailsDTO = dessertDetailsWrapperDTO.meals[0]
+        var ingredients: [DessertDetails.Ingredient] {
+            var ingredients = [DessertDetails.Ingredient]()
+
+            // When the JSON does not have an ingredient at one of the 20 ingredient properties the api either has an empty pair of quotes or null value
+            // This standardizes the empty properties such that every property with no value will store empty quotes
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient1 ?? "", measure: dessertDetailsDTO.strMeasure1 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient2 ?? "", measure: dessertDetailsDTO.strMeasure2 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient3 ?? "", measure: dessertDetailsDTO.strMeasure3 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient4 ?? "", measure: dessertDetailsDTO.strMeasure4 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient5 ?? "", measure: dessertDetailsDTO.strMeasure5 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient6 ?? "", measure: dessertDetailsDTO.strMeasure6 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient7 ?? "", measure: dessertDetailsDTO.strMeasure7 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient8 ?? "", measure: dessertDetailsDTO.strMeasure8 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient9 ?? "", measure: dessertDetailsDTO.strMeasure9 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient10 ?? "", measure: dessertDetailsDTO.strMeasure10 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient11 ?? "", measure: dessertDetailsDTO.strMeasure11 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient12 ?? "", measure: dessertDetailsDTO.strMeasure12 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient13 ?? "", measure: dessertDetailsDTO.strMeasure13 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient14 ?? "", measure: dessertDetailsDTO.strMeasure14 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient15 ?? "", measure: dessertDetailsDTO.strMeasure15 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient16 ?? "", measure: dessertDetailsDTO.strMeasure16 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient17 ?? "", measure: dessertDetailsDTO.strMeasure17 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient18 ?? "", measure: dessertDetailsDTO.strMeasure18 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient19 ?? "", measure: dessertDetailsDTO.strMeasure19 ?? ""))
+            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient20 ?? "", measure: dessertDetailsDTO.strMeasure20 ?? ""))
+
+            // Now filter out any empty values
+//            ingredients.filter({ $0.name != "" }))
+            ingredients.removeAll(where: { $0.name == "" })
+
+            return ingredients
+        }
+        return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: dessertDetailsDTO.strInstructions, ingredients: ingredients)
     }
 }
