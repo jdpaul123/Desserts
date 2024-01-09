@@ -19,7 +19,8 @@ struct DessertListCell: View {
             // TODO: Use async image here?
             Image(uiImage: .init(data: vm.imageData)!)
                 .resizable()
-                .frame(width: 50, height: 50)
+                .frame(width: 115, height: 115)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             Text(vm.name)
         }
         .task {
@@ -30,7 +31,6 @@ struct DessertListCell: View {
 
 @Observable
 class DessertListCellViewModel {
-    // This would be a great place for a mcro to confirm that the pngData below is not nil.
     var imageData: Data
     let name: String
     private let imageURL: URL

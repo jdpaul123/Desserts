@@ -16,19 +16,39 @@ struct DessertDetailScreen: View {
 
     var body: some View {
         List {
-            Section("Ingredients") {
+            AsyncImage(url: vm.imageURL) { image in
+                image
+                    .resizable()
+            } placeholder: {
+                Image(.no)
+                    .resizable()
+            }
+            .scaledToFill()
+            .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
+            .clipped()
+            Section {
                 ForEach(vm.ingredients) { ingredient in
                     HStack {
                         Text(ingredient.name)
                         Spacer()
                         Text(ingredient.measure)
                     }
+                    .padding(.init(top: 0, leading: 20, bottom: 4, trailing: 20))
                 }
             }
-            Section("Instructions") {
+            header: {
+                Text("Ingredients")
+                    .font(.title2)
+            }
+            Section {
                 Text(vm.instructions)
+                    .padding(.init(top: 15, leading: 20, bottom: 15, trailing: 20))
+            } header: {
+                Text("Instructions")
+                    .font(.title2)
             }
         }
+        .listStyle(GroupedListStyle())
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(vm.name)
         .task {
@@ -44,20 +64,23 @@ struct DessertDetailScreen: View {
 @Observable
 class DessertDetailScreenViewModel {
     private let id: String
+    let imageURL: URL
     var name: String
     var instructions: String
     var ingredients: [DessertDetails.Ingredient]
 
-    init(dessertID: String) {
+    init(dessertID: String, imageURL: URL) {
         self.id = dessertID
+        self.imageURL = imageURL
         self.name = ""
         self.instructions = ""
         self.ingredients = []
     }
 
     // Initializer for previewing and testing
-    init(dessert: DessertDetails) {
+    init(dessert: DessertDetails, imageURL: URL) {
         self.id = dessert.id
+        self.imageURL = imageURL
         self.name = dessert.name
         self.instructions = dessert.instructions
         self.ingredients = dessert.ingredients
@@ -96,6 +119,6 @@ class DessertDetailScreenDataStub {
 #Preview {
 //    DessertDetailScreen(vm: DessertDetailScreenViewModel(dessert: DessertDetailScreenDataStub.shared.dessert))
     NavigationStack {
-        DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: "52898"))
+        DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: "52898", imageURL: URL(string: "https://www.themealdb.com/images/media/meals/vqpwrv1511723001.jpg")!))
     }
 }
