@@ -22,6 +22,9 @@ struct DessertListCell: View {
                 .frame(width: 50, height: 50)
             Text(vm.name)
         }
+        .task {
+            await vm.loadImageIfNeeded()
+        }
     }
 }
 
@@ -30,10 +33,27 @@ class DessertListCellViewModel {
     // This would be a great place for a mcro to confirm that the pngData below is not nil.
     var imageData: Data
     let name: String
+    private let imageURL: URL
 
-    init(name: String, imageData: Data = UIImage(resource: .no).pngData()!) {
+    init(name: String, imageURL: URL, imageData: Data = UIImage(resource: .no).pngData()!) {
         self.imageData = imageData
+        self.imageURL = imageURL
         self.name = name
+    }
+
+    func loadImageIfNeeded() async {
+        if imageData == UIImage(resource: .no).pngData()! {
+            await getImage()
+        }
+    }
+
+    private func getImage() async {
+        let newImageData = await NetworkManager.shared.getImage(from: imageURL)
+        guard let newImageData = newImageData else {
+            print("failed")
+            return
+        }
+        imageData = newImageData
     }
 }
 
@@ -41,12 +61,13 @@ struct DessertListCellDataStub {
     static let shared = DessertListCellDataStub()
 
     private let name = "Apple & Blackberry Crumble"
+    private let imageURL = URL(string: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg")!
 
     func makeDessertListCellViewModel() -> DessertListCellViewModel {
-        return DessertListCellViewModel(name: name)
+        return DessertListCellViewModel(name: name, imageURL: imageURL)
     }
 }
 
 #Preview {
-    DessertListCell(vm: DessertListCellViewModel(name: "Apple & Blackberry Crumble"))
+    DessertListCell(vm: DessertListCellDataStub.shared.makeDessertListCellViewModel())
 }

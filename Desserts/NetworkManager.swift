@@ -99,4 +99,18 @@ class NetworkManager {
         }
         return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: dessertDetailsDTO.strInstructions, ingredients: ingredients)
     }
+
+    func getImage(from url: URL) async -> Data? {
+        let imageData: Data
+        let response: URLResponse
+        do {
+            (imageData, response) = try await URLSession.shared.data(from: url)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
+        return imageData
+    }
 }

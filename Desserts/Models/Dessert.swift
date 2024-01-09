@@ -16,5 +16,5 @@ struct Dessert: Decodable, Identifiable {
     }
     let id: String
     let name: String
-    let thumbnailURL: URL?
+    let thumbnailURL: URL
 }

@@ -19,14 +19,16 @@ struct DessertListScreen: View {
         List {
             ForEach(vm.desserts) { dessert in
                 NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id))) {
-                    DessertListCell(vm: DessertListCellViewModel(name: dessert.name))
+                    DessertListCell(vm: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
                 }
             }
         }
         .navigationTitle("Desserts")
         .task {
+            guard !vm.isLoaded else { return }
             do {
                 try await vm.fetchDesserts()
+                vm.isLoaded.toggle()
             } catch {
                 // TODO: Show error on screen as banner or alert.
             }
@@ -36,6 +38,7 @@ struct DessertListScreen: View {
 
 @Observable
 class DessertListScreenViewModel {
+    var isLoaded = false
     var desserts: [Dessert]
 
     init(desserts: [Dessert] = []) {
