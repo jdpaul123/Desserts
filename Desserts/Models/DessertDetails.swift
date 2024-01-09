@@ -21,6 +21,6 @@ struct DessertDetails {
     }
     let id: String
     let name: String
-    let instructions: String
+    let instructions: [String]
     let ingredients: [Ingredient]
 }

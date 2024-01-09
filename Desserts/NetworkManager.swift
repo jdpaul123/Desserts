@@ -64,8 +64,22 @@ class NetworkManager {
             throw ErrorMessage.unableToComplete
         }
 
+
         // TODO: Factor this out into a data service
         let dessertDetailsDTO = dessertDetailsWrapperDTO.meals[0]
+
+        var instructions: [String] {
+            var index = 0
+            // Number the instructions on each line break
+            return dessertDetailsDTO.strInstructions.components(separatedBy: "\n").compactMap({ element in
+                if element.isEmpty || element == "" || element == "\r" {
+                    return nil
+                }
+                index += 1
+                return "\(index). \(element)"
+            })
+        }
+
         var ingredients: [DessertDetails.Ingredient] {
             var ingredients = [DessertDetails.Ingredient]()
 
@@ -97,7 +111,7 @@ class NetworkManager {
 
             return ingredients
         }
-        return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: dessertDetailsDTO.strInstructions, ingredients: ingredients)
+        return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: instructions, ingredients: ingredients)
     }
 
     func getImage(from url: URL) async -> Data? {
