@@ -66,43 +66,6 @@ struct DessertDetailScreen: View {
     }
 }
 
-@Observable
-class DessertDetailScreenViewModel {
-    private let id: String
-    let imageURL: URL
-    var name: String
-    var instructions: [String]
-    var ingredients: [DessertDetails.Ingredient]
-
-    init(dessertID: String, imageURL: URL) {
-        self.id = dessertID
-        self.imageURL = imageURL
-        self.name = ""
-        self.instructions = []
-        self.ingredients = []
-    }
-
-    // Initializer for previewing and testing
-    init(dessert: DessertDetails, imageURL: URL) {
-        self.id = dessert.id
-        self.imageURL = imageURL
-        self.name = dessert.name
-        self.instructions = dessert.instructions
-        self.ingredients = dessert.ingredients
-    }
-
-    func fetchDessertDetails() async throws {
-        do {
-            let dessert = try await NetworkManager.shared.getDessertDetails(for: id)
-            name = dessert.name
-            instructions = dessert.instructions
-            ingredients = dessert.ingredients
-        } catch {
-            throw error
-        }
-    }
-}
-
 class DessertDetailScreenDataStub {
     static let shared = DessertDetailScreenDataStub()
     let imageURL = URL(string: "https://www.themealdb.com/images/media/meals/vqpwrv1511723001.jpg")!

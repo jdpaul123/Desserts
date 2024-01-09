@@ -37,28 +37,10 @@ struct DessertListScreen: View {
     }
 }
 
-@Observable
-class DessertListScreenViewModel {
-    var isLoaded = false
-    var desserts: [Dessert]
-
-    init(desserts: [Dessert] = []) {
-        self.desserts = desserts
-    }
-
-    func fetchDesserts() async throws {
-        do {
-            desserts = try await NetworkManager.shared.getDesserts()
-        } catch {
-            throw error
-        }
-    }
-}
-
 struct DessertListScreenDataStub {
     static let shared = DessertListScreenDataStub()
 
-    let desserts = [
+    private let desserts = [
         Dessert(id: "53049", name: "Apam balik", thumbnailURL: URL(string: "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg")!),
         Dessert(id: "52893", name: "Apple & Blackberry Crumble", thumbnailURL: URL(string: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg")!),
         Dessert(id: "52768", name: "Apple Frangipan Tart", thumbnailURL: URL(string: "https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg")!),
