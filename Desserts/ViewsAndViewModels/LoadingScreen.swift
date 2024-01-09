@@ -18,8 +18,7 @@ struct LoadingScreen: View {
                 .cornerRadius(10)
                 .rotationEffect(.degrees(isRotating))
                 .onAppear {
-                    withAnimation(.linear(duration: 1)
-                        .speed(0.1).repeatForever(autoreverses: false)) {
+                    withAnimation(.linear(duration: 3.5).repeatForever(autoreverses: false)) {
                             isRotating = 360.0
                         }
                 }
