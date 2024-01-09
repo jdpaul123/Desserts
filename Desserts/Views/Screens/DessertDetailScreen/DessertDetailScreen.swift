@@ -18,50 +18,53 @@ struct DessertDetailScreen: View {
     let horizontalPadding: CGFloat = 20
 
     var body: some View {
-        List {
-            AsyncImage(url: vm.imageURL) { image in
-                image
-                    .resizable()
-            } placeholder: {
-                Image(.no)
-                    .resizable()
+        if vm.isEmptyView {
+            VStack(spacing: horizontalPadding) {
+                ProgressView()
+                Text("Loading...")
             }
-            .scaledToFill()
-            .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
-            .clipped()
-            Section {
-                ForEach(vm.ingredients) { ingredient in
-                    HStack {
-                        Text(ingredient.name)
-                        Spacer()
-                        Text(ingredient.measure)
-                    }
-                    .padding(.init(top: verticalPadding, leading: horizontalPadding, bottom: verticalPadding, trailing: horizontalPadding))
+            .task {
+                try? await vm.fetchDessertDetails()
+            }
+        } else {
+            List {
+                AsyncImage(url: vm.imageURL) { image in
+                    image
+                        .resizable()
+                } placeholder: {
+                    Image(.no)
+                        .resizable()
                 }
-            }
-            header: {
-                Text("Ingredients")
-                    .font(.title2)
-            }
-            Section {
-                ForEach(vm.instructions, id: \.self) { instruction in
-                    Text(instruction)
+                .scaledToFill()
+                .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
+                .clipped()
+                Section {
+                    ForEach(vm.ingredients) { ingredient in
+                        HStack {
+                            Text(ingredient.name)
+                            Spacer()
+                            Text(ingredient.measure)
+                        }
                         .padding(.init(top: verticalPadding, leading: horizontalPadding, bottom: verticalPadding, trailing: horizontalPadding))
+                    }
                 }
-            } header: {
-                Text("Instructions")
-                    .font(.title2)
+                header: {
+                    Text("Ingredients")
+                        .font(.title2)
+                }
+                Section {
+                    ForEach(vm.instructions, id: \.self) { instruction in
+                        Text(instruction)
+                            .padding(.init(top: verticalPadding, leading: horizontalPadding, bottom: verticalPadding, trailing: horizontalPadding))
+                    }
+                } header: {
+                    Text("Instructions")
+                        .font(.title2)
+                }
             }
-        }
-        .listStyle(GroupedListStyle())
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationTitle(vm.name)
-        .task {
-            do {
-                try await vm.fetchDessertDetails()
-            } catch {
-                // TODO: Show error on screen as banner or alert.
-            }
+            .listStyle(GroupedListStyle())
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(vm.name)
         }
     }
 }

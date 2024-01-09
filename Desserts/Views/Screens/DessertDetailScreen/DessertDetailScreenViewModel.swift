@@ -14,6 +14,7 @@ class DessertDetailScreenViewModel {
     var name: String
     var instructions: [String]
     var ingredients: [DessertDetails.Ingredient]
+    var isEmptyView = true
 
     init(dessertID: String, imageURL: URL) {
         self.id = dessertID
@@ -38,6 +39,7 @@ class DessertDetailScreenViewModel {
             name = dessert.name
             instructions = dessert.instructions
             ingredients = dessert.ingredients
+            isEmptyView = false
         } catch {
             throw error
         }
