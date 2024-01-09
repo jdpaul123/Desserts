@@ -17,10 +17,7 @@ struct DessertListScreen: View {
 
     var body: some View {
         if !vm.isLoaded {
-            VStack(spacing: 20) {
-                ProgressView()
-                Text("Loading...")
-            }
+            LoadingScreen()
             .task {
                 try? await vm.fetchDesserts()
             }

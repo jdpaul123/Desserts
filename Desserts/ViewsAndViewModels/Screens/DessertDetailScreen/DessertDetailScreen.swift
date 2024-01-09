@@ -19,10 +19,7 @@ struct DessertDetailScreen: View {
 
     var body: some View {
         if !vm.isLoaded {
-            VStack(spacing: horizontalPadding) {
-                ProgressView()
-                Text("Loading...")
-            }
+            LoadingScreen()
             .task {
                 try? await vm.fetchDessertDetails()
             }
