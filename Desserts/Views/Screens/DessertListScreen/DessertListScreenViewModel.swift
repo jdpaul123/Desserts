@@ -19,6 +19,7 @@ class DessertListScreenViewModel {
     func fetchDesserts() async throws {
         do {
             desserts = try await NetworkManager.shared.getDesserts()
+            isLoaded = true
         } catch {
             throw error
         }

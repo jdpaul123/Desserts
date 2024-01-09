@@ -16,23 +16,24 @@ struct DessertListScreen: View {
     }
 
     var body: some View {
-        List {
-            ForEach(vm.desserts) { dessert in
-                NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
-                    DessertListCell(vm: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
+        if !vm.isLoaded {
+            VStack(spacing: 20) {
+                ProgressView()
+                Text("Loading...")
+            }
+            .task {
+                try? await vm.fetchDesserts()
+            }
+        } else {
+            List {
+                ForEach(vm.desserts) { dessert in
+                    NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
+                        DessertListCell(vm: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
+                    }
+                    .listRowSeparator(.hidden)
                 }
-                .listRowSeparator(.hidden)
             }
-        }
-        .navigationTitle("Desserts")
-        .task {
-            guard !vm.isLoaded else { return }
-            do {
-                try await vm.fetchDesserts()
-                vm.isLoaded.toggle()
-            } catch {
-                // TODO: Show error on screen as banner or alert.
-            }
+            .navigationTitle("Desserts")
         }
     }
 }

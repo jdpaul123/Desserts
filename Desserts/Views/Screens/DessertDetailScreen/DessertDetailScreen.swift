@@ -18,7 +18,7 @@ struct DessertDetailScreen: View {
     let horizontalPadding: CGFloat = 20
 
     var body: some View {
-        if vm.isEmptyView {
+        if !vm.isLoaded {
             VStack(spacing: horizontalPadding) {
                 ProgressView()
                 Text("Loading...")
