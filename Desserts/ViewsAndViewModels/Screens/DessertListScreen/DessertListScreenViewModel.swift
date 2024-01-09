@@ -20,18 +20,16 @@ class DessertListScreenViewModel {
     }
 
     func fetchDesserts() async throws {
+        status = .loading
         do {
             desserts = try await NetworkManager.shared.getDesserts()
             status = .success
         } catch {
-            guard let error = error as? ErrorMessage else {
-                return
-            }
-            status = .failed
+            guard let error = error as? ErrorMessage else { return }
             bannerData.title = "Error"
             bannerData.detail = error.rawValue
             showBanner = true
-            throw error
+            status = .failed
         }
     }
 }

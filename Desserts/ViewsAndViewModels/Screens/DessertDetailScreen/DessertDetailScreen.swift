@@ -18,12 +18,19 @@ struct DessertDetailScreen: View {
     let horizontalPadding: CGFloat = 20
 
     var body: some View {
-        if !vm.isLoaded {
+        switch vm.status {
+        case .loading:
             LoadingView()
             .task {
                 try? await vm.fetchDessertDetails()
             }
-        } else {
+        case .failed:
+            PullToRefreshView()
+                .refreshable {
+                    try? await vm.fetchDessertDetails()
+                }
+                .banner(data: $vm.bannerData, show: $vm.showBanner)
+        case .success:
             List {
                 AsyncImage(url: vm.imageURL) { image in
                     image

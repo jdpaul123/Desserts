@@ -14,7 +14,10 @@ class DessertDetailScreenViewModel {
     var name: String
     var instructions: [String]
     var ingredients: [DessertDetails.Ingredient]
-    var isLoaded = false
+
+    var status: LoadingStates = .loading
+    var showBanner = false
+    var bannerData = BannerModifier.BannerData()
 
     init(dessertID: String, imageURL: URL) {
         self.id = dessertID
@@ -34,14 +37,19 @@ class DessertDetailScreenViewModel {
     }
 
     func fetchDessertDetails() async throws {
+        status = .loading
         do {
             let dessert = try await NetworkManager.shared.getDessertDetails(for: id)
             name = dessert.name
             instructions = dessert.instructions
             ingredients = dessert.ingredients
-            isLoaded = true
+            status = .success
         } catch {
-            throw error
+            guard let error = error as? ErrorMessage else { return }
+            bannerData.title = "Error"
+            bannerData.detail = error.rawValue
+            showBanner = true
+            status = .failed
         }
     }
 }
