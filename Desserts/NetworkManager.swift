@@ -92,8 +92,7 @@ class NetworkManager {
             ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient19 ?? "", measure: dessertDetailsDTO.strMeasure19 ?? ""))
             ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient20 ?? "", measure: dessertDetailsDTO.strMeasure20 ?? ""))
 
-            // Now filter out any empty values
-//            ingredients.filter({ $0.name != "" }))
+            // Now remove any ingredients that contain empty strings
             ingredients.removeAll(where: { $0.name == "" })
 
             return ingredients
