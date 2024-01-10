@@ -29,7 +29,7 @@ struct DessertListScreen: View {
                 .banner(data: $vm.bannerData, show: $vm.showBanner)
         case .success:
             List {
-                ForEach(vm.desserts) { dessert in
+                ForEach(vm.searchResults) { dessert in
                     NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
                         DessertListCell(vm: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
                     }
@@ -37,6 +37,7 @@ struct DessertListScreen: View {
                 }
             }
             .navigationTitle("Desserts")
+            .searchable(text: $vm.searchText)
         }
     }
 }

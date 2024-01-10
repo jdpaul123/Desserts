@@ -12,6 +12,15 @@ class DessertListScreenViewModel {
     var status: LoadingStates = .loading
     var desserts: [Dessert]
 
+    var searchText = ""
+    var searchResults: [Dessert] {
+        if searchText.isEmpty {
+            return desserts
+        } else {
+            return desserts.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+    }
+
     var bannerData = BannerModifier.BannerData()
     var showBanner = false
 
