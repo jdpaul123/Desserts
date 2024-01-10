@@ -45,8 +45,10 @@ final class DefaultDataService: DataService {
         }
 
         var ingredients: [DessertDetails.Ingredient] {
-            // When the JSON does not have an ingredient at one of the 20 ingredient properties the api either has an empty pair of quotes or null value
-            // This standardizes the empty properties such that every property with no value will store empty quotes
+            // When the JSON does not have an ingredient at one of the 20 ingredient properties the value of the property is empty quotes or null value
+
+            // This is the cleanest way I can think of to get the values from the api and process them into the model
+            // Step 1: Get the optional string for each ingredient/measure
             let ingredientTuples: [(KeyPath<DessertDetailsDTO, String?>, KeyPath<DessertDetailsDTO, String?>)] = [
                 (\DessertDetailsDTO.strIngredient1, \DessertDetailsDTO.strMeasure1),
                 (\DessertDetailsDTO.strIngredient2, \DessertDetailsDTO.strMeasure2),
@@ -70,8 +72,10 @@ final class DefaultDataService: DataService {
                 (\DessertDetailsDTO.strIngredient20, \DessertDetailsDTO.strMeasure20)
             ]
 
+            // Step 2. Create the array of ingredients
             var ingredients = [DessertDetails.Ingredient]()
 
+            // Step 3. Fill the ingredients/measures in the ingredients array and sift out any ingredients/measures that are nil or empty (ie. "")
             for ingredientTuple in ingredientTuples {
                 guard
                     let ingredient = dessertDetailsDTO[keyPath: ingredientTuple.0],
@@ -80,6 +84,7 @@ final class DefaultDataService: DataService {
                     continue
                 }
 
+                // Sometimes measure stores " " rather than "", so if an igredient has no measure then it will store " " or ""
                 let measure = dessertDetailsDTO[keyPath: ingredientTuple.1] ?? ""
 
                 ingredients.append(DessertDetails.Ingredient(name: ingredient, measure: measure))
