@@ -4,12 +4,10 @@
 //
 //  Created by Jonathan Paul on 1/8/24.
 //
-// TODO: Turn this into an instantiated object that conforms to a protocol so that we can simulate network calls for testing and previews
 
 import Foundation
 
 class NetworkService {
-    static let shared = NetworkService()
     private let baseURLString = "https://themealdb.com/api/json/v1/1/"
 
     func getDesserts() async throws -> [Dessert] {

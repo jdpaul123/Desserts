@@ -27,6 +27,8 @@
 		5293C9092B4DFF0400A0288A /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9082B4DFF0400A0288A /* PullToRefreshView.swift */; };
 		5293C90C2B4E02F900A0288A /* LoadingStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C90B2B4E02F900A0288A /* LoadingStates.swift */; };
 		5293C90F2B4E266000A0288A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C90E2B4E266000A0288A /* DataService.swift */; };
+		5293C9122B4E347800A0288A /* Injector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9112B4E347800A0288A /* Injector.swift */; };
+		5293C9142B4E5F0600A0288A /* DessertListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9132B4E5F0600A0288A /* DessertListCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		5293C9082B4DFF0400A0288A /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		5293C90B2B4E02F900A0288A /* LoadingStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStates.swift; sourceTree = "<group>"; };
 		5293C90E2B4E266000A0288A /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		5293C9112B4E347800A0288A /* Injector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Injector.swift; sourceTree = "<group>"; };
+		5293C9132B4E5F0600A0288A /* DessertListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertListCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				5211371B2B4CAB5C00491031 /* DessertListCell.swift */,
+				5293C9132B4E5F0600A0288A /* DessertListCellViewModel.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				5225F05E2B4C70FF00EABDEC /* DessertsApp.swift */,
+				5293C9112B4E347800A0288A /* Injector.swift */,
 				5293C9102B4E27D800A0288A /* Services */,
 				5293C9052B4DFAD700A0288A /* Extensions */,
 				5293C90A2B4E02E000A0288A /* Errors */,
@@ -296,7 +302,9 @@
 				5211371C2B4CAB5C00491031 /* DessertListCell.swift in Sources */,
 				5225F06F2B4C771500EABDEC /* ErrorMessage.swift in Sources */,
 				5225F06D2B4C75BA00EABDEC /* NetworkService.swift in Sources */,
+				5293C9142B4E5F0600A0288A /* DessertListCellViewModel.swift in Sources */,
 				5293C9012B4DD8AE00A0288A /* LoadingView.swift in Sources */,
+				5293C9122B4E347800A0288A /* Injector.swift in Sources */,
 				521137152B4C92D900491031 /* DessertDetailsDTO.swift in Sources */,
 				5293C90F2B4E266000A0288A /* DataService.swift in Sources */,
 				5211371E2B4CAC2A00491031 /* DessertDetailScreen.swift in Sources */,

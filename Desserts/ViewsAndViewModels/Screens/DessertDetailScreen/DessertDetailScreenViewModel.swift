@@ -37,9 +37,10 @@ class DessertDetailScreenViewModel {
     }
 
     func fetchDessertDetails() async throws {
+        let injector = Injector.shared
         status = .loading
         do {
-            let dessert = try await DataService.shared.getDessertDetails(for: id)
+            let dessert = try await injector.dataService.getDessertDetails(for: id)
             name = dessert.name
             instructions = dessert.instructions
             ingredients = dessert.ingredients

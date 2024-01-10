@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct DessertListScreen: View {
-    private let exampleData = DessertListScreenDataStub.shared
     @State private var vm: DessertListScreenViewModel
 
     init(vm: DessertListScreenViewModel) {

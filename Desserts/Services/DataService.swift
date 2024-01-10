@@ -8,13 +8,16 @@
 import Foundation
 
 class DataService {
-    // TODO: Pass in the NetworkService so that we can pass in a mock to get local assets and data for testing
-    static let shared = DataService()
+    weak var networkService: NetworkService!
+
+    init(networkService: NetworkService? = nil) {
+        self.networkService = networkService
+    }
 
     func getDesserts() async throws -> [Dessert] {
         var desserts: [Dessert]
         do {
-            desserts = try await NetworkService.shared.getDesserts()
+            desserts = try await networkService.getDesserts()
         } catch {
             throw error
         }
@@ -28,7 +31,7 @@ class DataService {
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
         let dessertDetailsDTO: DessertDetailsDTO
         do {
-            dessertDetailsDTO = try await NetworkService.shared.getDessertDetails(for: dessertID)
+            dessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
         } catch {
             throw error
         }
@@ -80,6 +83,6 @@ class DataService {
     }
 
     func getImageData(from url: URL) async -> Data? {
-        await NetworkService.shared.getImageData(from: url)
+        await networkService.getImageData(from: url)
     }
 }

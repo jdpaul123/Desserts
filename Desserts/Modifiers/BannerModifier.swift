@@ -4,7 +4,6 @@
 //
 //  Created by Jonathan Paul on 1/9/24.
 //
-// MARK: This is the banner modifier from my UO Kiosk app
 
 import SwiftUI
 
@@ -28,6 +27,7 @@ enum BannerType {
     }
 }
 
+// This is the banner modifier from my UO Kiosk app
 struct BannerModifier: ViewModifier {
     struct BannerData: Equatable {
         var title: String

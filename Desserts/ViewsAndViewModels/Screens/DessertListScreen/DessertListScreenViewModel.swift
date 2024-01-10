@@ -20,9 +20,10 @@ class DessertListScreenViewModel {
     }
 
     func fetchDesserts() async throws {
+        let injector = Injector.shared
         status = .loading
         do {
-            desserts = try await DataService.shared.getDesserts()
+            desserts = try await injector.dataService.getDesserts()
             status = .success
         } catch {
             guard let error = error as? ErrorMessage else { return }
