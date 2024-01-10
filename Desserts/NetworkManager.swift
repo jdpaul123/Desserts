@@ -39,6 +39,9 @@ class NetworkManager {
         for dessert in desserts.desserts {
             dessertArray.append(dessert)
         }
+
+        // Sort the desserts by name alphabetically
+        dessertArray.sort { $0.name < $1.name }
         return dessertArray
     }
 
