@@ -21,16 +21,15 @@ final class DessertListCellViewModel {
 
     func loadImageIfNeeded() async {
         if imageData == UIImage(resource: .no).pngData()! {
-            await getImage()
+            await getImageData()
         }
     }
 
-    private func getImage() async {
-        let newImageData = await Injector.shared.dataService.getImageData(from: imageURL)
-        guard let newImageData = newImageData else {
-            print("failed")
+    private func getImageData() async {
+        do {
+            imageData = try await Injector.shared.dataService.getImageData(from: imageURL)
+        } catch {
             return
         }
-        imageData = newImageData
     }
 }

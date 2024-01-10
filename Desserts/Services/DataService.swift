@@ -10,7 +10,7 @@ import Foundation
 protocol DataService {
     func getDesserts() async throws -> [Dessert]
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails
-    func getImageData(from url: URL) async -> Data?
+    func getImageData(from url: URL) async throws -> Data
 }
 
 final class DefaultDataService: DataService {
@@ -21,7 +21,7 @@ final class DefaultDataService: DataService {
     }
 
     func getDesserts() async throws -> [Dessert] {
-        var desserts: [Dessert] = try await networkService.getDesserts()
+        var desserts = try await networkService.getDesserts()
 
         // Sort the desserts by name alphabetically
         desserts.sort { $0.name < $1.name }
@@ -30,7 +30,7 @@ final class DefaultDataService: DataService {
     }
 
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
-        let dessertDetailsDTO: DessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
+        let dessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
 
         var instructions: [String] {
             var index = 0
@@ -95,7 +95,7 @@ final class DefaultDataService: DataService {
         return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: instructions, ingredients: ingredients)
     }
 
-    func getImageData(from url: URL) async -> Data? {
-        await networkService.getImageData(from: url)
+    func getImageData(from url: URL) async throws -> Data {
+        try await networkService.getImageData(from: url)
     }
 }

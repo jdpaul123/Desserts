@@ -10,7 +10,7 @@ import Foundation
 protocol NetworkService: AnyObject {
     func getDesserts() async throws -> [Dessert]
     func getDessertDetails(for dessertID: String) async throws -> DessertDetailsDTO
-    func getImageData(from url: URL) async -> Data?
+    func getImageData(from url: URL) async throws -> Data
 }
 
 final class DefaultNetworkService: NetworkService {
@@ -59,16 +59,16 @@ final class DefaultNetworkService: NetworkService {
     }
 
     /// Get image data and ignore the response or error
-    func getImageData(from url: URL) async -> Data? {
+    func getImageData(from url: URL) async throws -> Data {
         let imageData: Data
         let response: URLResponse
         do {
             (imageData, response) = try await URLSession.shared.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                return nil
+                throw NetworkException.invalidResponse
             }
         } catch {
-            return nil
+            throw NetworkException.unableToComplete
         }
         return imageData
     }
