@@ -14,24 +14,12 @@ class NetworkManager {
 
     func getDesserts() async throws -> [Dessert] {
         let endpoint = "\(baseURLString)filter.php?c=Dessert"
-        guard let url = URL(string: endpoint) else {
-            throw ErrorMessage.invalidURL
-        }
-
         let desserts: DessertsDTO
+
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw ErrorMessage.invalidResponse
-            }
-            let decoder = JSONDecoder()
-            do {
-                desserts = try decoder.decode(DessertsDTO.self, from: data)
-            } catch {
-                throw ErrorMessage.invalidData
-            }
+            desserts = try await decode(from: endpoint)
         } catch {
-            throw ErrorMessage.unableToComplete
+            throw error
         }
 
         // TODO: Factor this out into a data service
@@ -47,26 +35,13 @@ class NetworkManager {
 
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
         let endpoint = "\(baseURLString)lookup.php?i=\(dessertID)"
-        guard let url = URL(string: endpoint) else {
-            throw ErrorMessage.invalidURL
-        }
-
         let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw ErrorMessage.invalidResponse
-            }
-            let decoder = JSONDecoder()
-            do {
-                dessertDetailsWrapperDTO = try decoder.decode(DessertDetailsWrapperDTO.self, from: data)
-            } catch {
-                throw ErrorMessage.invalidData
-            }
-        } catch {
-            throw ErrorMessage.unableToComplete
-        }
 
+        do {
+            dessertDetailsWrapperDTO = try await decode(from: endpoint)
+        } catch {
+            throw error
+        }
 
         // TODO: Factor this out into a data service
         let dessertDetailsDTO = dessertDetailsWrapperDTO.meals[0]
@@ -117,6 +92,32 @@ class NetworkManager {
         return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: instructions, ingredients: ingredients)
     }
 
+    /// Generic function to decode JSON data
+    private func decode<T: Decodable>(from urlString: String) async throws -> T {
+        guard let url = URL(string: urlString) else {
+            throw ErrorMessage.invalidURL
+        }
+
+        let decodedData: T
+        do {
+            let (data, response) = try await URLSession.shared.data(from: url)
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                throw ErrorMessage.invalidResponse
+            }
+            let decoder = JSONDecoder()
+            do {
+                decodedData = try decoder.decode(T.self, from: data)
+            } catch {
+                throw ErrorMessage.invalidData
+            }
+        } catch {
+            throw ErrorMessage.unableToComplete
+        }
+
+        return decodedData
+    }
+
+    /// Get image data and ignore the response or error
     func getImage(from url: URL) async -> Data? {
         let imageData: Data
         let response: URLResponse
