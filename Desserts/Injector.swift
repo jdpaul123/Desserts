@@ -12,10 +12,10 @@ import Foundation
 class Injector {
     static let shared = Injector()
     private let networkService = NetworkService()
-    let dataService = DataService()
+    let dataService: DataService
 
     init() {
         // Set the networkService as a weak variable to avoid a reference cycle
-        dataService.networkService = networkService
+        dataService = DataService(networkService: networkService)
     }
 }
