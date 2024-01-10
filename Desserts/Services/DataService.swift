@@ -20,6 +20,7 @@ final class DefaultDataService: DataService {
         self.networkService = networkService
     }
 
+    /// Get all the desserts and sort the data
     func getDesserts() async throws -> [Dessert] {
         var desserts = try await networkService.getDesserts()
 
@@ -29,6 +30,7 @@ final class DefaultDataService: DataService {
         return desserts
     }
 
+    /// Get the details for a dessert and process the data into the model
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
         let dessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
 
@@ -92,9 +94,11 @@ final class DefaultDataService: DataService {
 
             return ingredients
         }
+
         return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: instructions, ingredients: ingredients)
     }
 
+    ///  Get the image data from the url
     func getImageData(from url: URL) async throws -> Data {
         try await networkService.getImageData(from: url)
     }

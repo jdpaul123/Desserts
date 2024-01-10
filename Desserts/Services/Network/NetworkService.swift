@@ -16,6 +16,7 @@ protocol NetworkService: AnyObject {
 final class DefaultNetworkService: NetworkService {
     private let baseURLString = "https://themealdb.com/api/json/v1/1/"
 
+    /// Get all the desserts
     func getDesserts() async throws -> [Dessert] {
         let endpoint = "\(baseURLString)filter.php?c=Dessert"
 
@@ -23,6 +24,7 @@ final class DefaultNetworkService: NetworkService {
         return response.desserts
     }
 
+    /// Get the details for a dessert
     func getDessertDetails(for dessertID: String) async throws -> DessertDetailsDTO {
         let endpoint = "\(baseURLString)lookup.php?i=\(dessertID)"
         let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO = try await fetchAndDecode(from: endpoint)
@@ -58,7 +60,7 @@ final class DefaultNetworkService: NetworkService {
         return decodedData
     }
 
-    /// Get image data and ignore the response or error
+    /// Get image data from a URL
     func getImageData(from url: URL) async throws -> Data {
         let imageData: Data
         let response: URLResponse
