@@ -7,9 +7,9 @@
 
 import Foundation
 
-class NetworkManager {
+class NetworkService {
     // TODO: Make a generic network function that getDesserts() and getDessertDetails() can use
-    static let shared = NetworkManager()
+    static let shared = NetworkService()
     private let baseURLString = "https://themealdb.com/api/json/v1/1/"
 
     func getDesserts() async throws -> [Dessert] {

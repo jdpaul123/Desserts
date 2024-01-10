@@ -48,7 +48,7 @@ class DessertListCellViewModel {
     }
 
     private func getImage() async {
-        let newImageData = await NetworkManager.shared.getImage(from: imageURL)
+        let newImageData = await NetworkService.shared.getImage(from: imageURL)
         guard let newImageData = newImageData else {
             print("failed")
             return

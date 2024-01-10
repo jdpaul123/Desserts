@@ -15,7 +15,7 @@
 		5225F0612B4C70FF00EABDEC /* DessertListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F0602B4C70FF00EABDEC /* DessertListScreen.swift */; };
 		5225F0632B4C710000EABDEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5225F0622B4C710000EABDEC /* Assets.xcassets */; };
 		5225F0662B4C710000EABDEC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5225F0652B4C710000EABDEC /* Preview Assets.xcassets */; };
-		5225F06D2B4C75BA00EABDEC /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F06C2B4C75BA00EABDEC /* NetworkManager.swift */; };
+		5225F06D2B4C75BA00EABDEC /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F06C2B4C75BA00EABDEC /* NetworkService.swift */; };
 		5225F06F2B4C771500EABDEC /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F06E2B4C771500EABDEC /* ErrorMessage.swift */; };
 		5225F0712B4C786300EABDEC /* Dessert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F0702B4C786300EABDEC /* Dessert.swift */; };
 		5225F0732B4C786900EABDEC /* DessertDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5225F0722B4C786900EABDEC /* DessertDetails.swift */; };
@@ -26,6 +26,7 @@
 		5293C9072B4DFAF700A0288A /* View+Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9062B4DFAF700A0288A /* View+Banner.swift */; };
 		5293C9092B4DFF0400A0288A /* PullToRefreshView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9082B4DFF0400A0288A /* PullToRefreshView.swift */; };
 		5293C90C2B4E02F900A0288A /* LoadingStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C90B2B4E02F900A0288A /* LoadingStates.swift */; };
+		5293C90F2B4E266000A0288A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C90E2B4E266000A0288A /* DataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,7 +39,7 @@
 		5225F0602B4C70FF00EABDEC /* DessertListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertListScreen.swift; sourceTree = "<group>"; };
 		5225F0622B4C710000EABDEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5225F0652B4C710000EABDEC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		5225F06C2B4C75BA00EABDEC /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		5225F06C2B4C75BA00EABDEC /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5225F06E2B4C771500EABDEC /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		5225F0702B4C786300EABDEC /* Dessert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dessert.swift; sourceTree = "<group>"; };
 		5225F0722B4C786900EABDEC /* DessertDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DessertDetails.swift; sourceTree = "<group>"; };
@@ -49,6 +50,7 @@
 		5293C9062B4DFAF700A0288A /* View+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Banner.swift"; sourceTree = "<group>"; };
 		5293C9082B4DFF0400A0288A /* PullToRefreshView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefreshView.swift; sourceTree = "<group>"; };
 		5293C90B2B4E02F900A0288A /* LoadingStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingStates.swift; sourceTree = "<group>"; };
+		5293C90E2B4E266000A0288A /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				5225F05E2B4C70FF00EABDEC /* DessertsApp.swift */,
-				5225F06C2B4C75BA00EABDEC /* NetworkManager.swift */,
+				5225F06C2B4C75BA00EABDEC /* NetworkService.swift */,
+				5293C90E2B4E266000A0288A /* DataService.swift */,
 				5293C9052B4DFAD700A0288A /* Extensions */,
 				5293C90A2B4E02E000A0288A /* Errors */,
 				5293C9042B4DFAC300A0288A /* Modifiers */,
@@ -284,9 +287,10 @@
 				5225F0712B4C786300EABDEC /* Dessert.swift in Sources */,
 				5211371C2B4CAB5C00491031 /* DessertListCell.swift in Sources */,
 				5225F06F2B4C771500EABDEC /* ErrorMessage.swift in Sources */,
-				5225F06D2B4C75BA00EABDEC /* NetworkManager.swift in Sources */,
+				5225F06D2B4C75BA00EABDEC /* NetworkService.swift in Sources */,
 				5293C9012B4DD8AE00A0288A /* LoadingView.swift in Sources */,
 				521137152B4C92D900491031 /* DessertDetailsDTO.swift in Sources */,
+				5293C90F2B4E266000A0288A /* DataService.swift in Sources */,
 				5211371E2B4CAC2A00491031 /* DessertDetailScreen.swift in Sources */,
 				5293C8FE2B4DBC9700A0288A /* DessertListScreenViewModel.swift in Sources */,
 				5225F0732B4C786900EABDEC /* DessertDetails.swift in Sources */,

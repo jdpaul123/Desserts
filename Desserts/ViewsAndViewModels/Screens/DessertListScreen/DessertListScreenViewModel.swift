@@ -22,7 +22,7 @@ class DessertListScreenViewModel {
     func fetchDesserts() async throws {
         status = .loading
         do {
-            desserts = try await NetworkManager.shared.getDesserts()
+            desserts = try await NetworkService.shared.getDesserts()
             status = .success
         } catch {
             guard let error = error as? ErrorMessage else { return }

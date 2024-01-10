@@ -39,7 +39,7 @@ class DessertDetailScreenViewModel {
     func fetchDessertDetails() async throws {
         status = .loading
         do {
-            let dessert = try await NetworkManager.shared.getDessertDetails(for: id)
+            let dessert = try await NetworkService.shared.getDessertDetails(for: id)
             name = dessert.name
             instructions = dessert.instructions
             ingredients = dessert.ingredients
