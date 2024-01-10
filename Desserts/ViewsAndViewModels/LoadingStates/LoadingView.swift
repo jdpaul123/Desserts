@@ -19,8 +19,8 @@ struct LoadingView: View {
                 .rotationEffect(.degrees(isRotating))
                 .onAppear {
                     withAnimation(.linear(duration: 3.5).repeatForever(autoreverses: false)) {
-                            isRotating = 360.0
-                        }
+                        isRotating = 360.0
+                    }
                 }
                 .padding()
             Text("Loading...")

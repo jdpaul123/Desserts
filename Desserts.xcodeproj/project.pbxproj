@@ -139,8 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				5225F05E2B4C70FF00EABDEC /* DessertsApp.swift */,
-				5225F06C2B4C75BA00EABDEC /* NetworkService.swift */,
-				5293C90E2B4E266000A0288A /* DataService.swift */,
+				5293C9102B4E27D800A0288A /* Services */,
 				5293C9052B4DFAD700A0288A /* Extensions */,
 				5293C90A2B4E02E000A0288A /* Errors */,
 				5293C9042B4DFAC300A0288A /* Modifiers */,
@@ -209,6 +208,15 @@
 				5293C9082B4DFF0400A0288A /* PullToRefreshView.swift */,
 			);
 			path = LoadingStates;
+			sourceTree = "<group>";
+		};
+		5293C9102B4E27D800A0288A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5225F06C2B4C75BA00EABDEC /* NetworkService.swift */,
+				5293C90E2B4E266000A0288A /* DataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

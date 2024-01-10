@@ -1,50 +1,37 @@
 //
-//  NetworkManager.swift
+//  DataService.swift
 //  Desserts
 //
-//  Created by Jonathan Paul on 1/8/24.
+//  Created by Jonathan Paul on 1/9/24.
 //
 
 import Foundation
 
-class NetworkService {
-    // TODO: Make a generic network function that getDesserts() and getDessertDetails() can use
-    static let shared = NetworkService()
-    private let baseURLString = "https://themealdb.com/api/json/v1/1/"
+class DataService {
+    // TODO: Pass in the NetworkService so that we can pass in a mock to get local assets and data for testing
+    static let shared = DataService()
 
     func getDesserts() async throws -> [Dessert] {
-        let endpoint = "\(baseURLString)filter.php?c=Dessert"
-        let desserts: DessertsDTO
-
+        var desserts: [Dessert]
         do {
-            desserts = try await decode(from: endpoint)
+            desserts = try await NetworkService.shared.getDesserts()
         } catch {
             throw error
-        }
-
-        // TODO: Factor this out into a data service
-        var dessertArray = [Dessert]()
-        for dessert in desserts.desserts {
-            dessertArray.append(dessert)
         }
 
         // Sort the desserts by name alphabetically
-        dessertArray.sort { $0.name < $1.name }
-        return dessertArray
+        desserts.sort { $0.name < $1.name }
+
+        return desserts
     }
 
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
-        let endpoint = "\(baseURLString)lookup.php?i=\(dessertID)"
-        let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO
-
+        let dessertDetailsDTO: DessertDetailsDTO
         do {
-            dessertDetailsWrapperDTO = try await decode(from: endpoint)
+            dessertDetailsDTO = try await NetworkService.shared.getDessertDetails(for: dessertID)
         } catch {
             throw error
         }
-
-        // TODO: Factor this out into a data service
-        let dessertDetailsDTO = dessertDetailsWrapperDTO.meals[0]
 
         var instructions: [String] {
             var index = 0
@@ -92,43 +79,7 @@ class NetworkService {
         return DessertDetails(id: dessertDetailsDTO.idMeal, name: dessertDetailsDTO.strMeal, instructions: instructions, ingredients: ingredients)
     }
 
-    /// Generic function to decode JSON data
-    private func decode<T: Decodable>(from urlString: String) async throws -> T {
-        guard let url = URL(string: urlString) else {
-            throw ErrorMessage.invalidURL
-        }
-
-        let decodedData: T
-        do {
-            let (data, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw ErrorMessage.invalidResponse
-            }
-            let decoder = JSONDecoder()
-            do {
-                decodedData = try decoder.decode(T.self, from: data)
-            } catch {
-                throw ErrorMessage.invalidData
-            }
-        } catch {
-            throw ErrorMessage.unableToComplete
-        }
-
-        return decodedData
-    }
-
-    /// Get image data and ignore the response or error
-    func getImage(from url: URL) async -> Data? {
-        let imageData: Data
-        let response: URLResponse
-        do {
-            (imageData, response) = try await URLSession.shared.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                return nil
-            }
-        } catch {
-            return nil
-        }
-        return imageData
+    func getImageData(from url: URL) async -> Data? {
+        await NetworkService.shared.getImageData(from: url)
     }
 }
