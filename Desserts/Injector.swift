@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Injector {
+final class Injector {
     static let shared = Injector()
 
     private let networkService: NetworkService = DefaultNetworkService()

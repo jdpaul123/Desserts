@@ -8,7 +8,7 @@
 import UIKit
 
 @Observable
-class DessertListCellViewModel {
+final class DessertListCellViewModel {
     var imageData: Data
     let name: String
     private let imageURL: URL
