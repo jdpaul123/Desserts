@@ -37,7 +37,7 @@ struct DessertListScreen: View {
                 }
             }
             .navigationTitle("Desserts")
-            .searchable(text: $vm.searchText)
+            .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
     }
 }
