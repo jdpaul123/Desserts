@@ -8,7 +8,7 @@
 import Foundation
 
 class DataService {
-    weak var networkService: NetworkService!
+    private weak var networkService: NetworkService!
 
     init(networkService: NetworkService? = nil) {
         self.networkService = networkService
