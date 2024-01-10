@@ -73,8 +73,8 @@ struct DessertDetailScreen: View {
     }
 }
 
-class DessertDetailScreenDataStub {
-    static let shared = DessertDetailScreenDataStub()
+struct DessertDetailScreenPreviewStub {
+    static let shared = DessertDetailScreenPreviewStub()
     let imageURL = URL(string: "https://www.themealdb.com/images/media/meals/vqpwrv1511723001.jpg")!
     let dessert: DessertDetails
 
@@ -112,6 +112,6 @@ class DessertDetailScreenDataStub {
 
 #Preview {
     NavigationStack {
-        DessertDetailScreen(vm: DessertDetailScreenViewModel(dessert: DessertDetailScreenDataStub.shared.dessert, imageURL: DessertDetailScreenDataStub.shared.imageURL))
+        DessertDetailScreen(vm: DessertDetailScreenViewModel(dessert: DessertDetailScreenPreviewStub.shared.dessert, imageURL: DessertDetailScreenPreviewStub.shared.imageURL))
     }
 }

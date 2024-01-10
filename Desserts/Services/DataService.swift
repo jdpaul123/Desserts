@@ -7,20 +7,21 @@
 
 import Foundation
 
-class DataService {
-    private weak var networkService: NetworkService!
+protocol DataService {
+    func getDesserts() async throws -> [Dessert]
+    func getDessertDetails(for dessertID: String) async throws -> DessertDetails
+    func getImageData(from url: URL) async -> Data?
+}
 
-    init(networkService: NetworkService? = nil) {
+final class DefaultDataService: DataService {
+    private let networkService: NetworkService
+
+    init(networkService: NetworkService) {
         self.networkService = networkService
     }
 
     func getDesserts() async throws -> [Dessert] {
-        var desserts: [Dessert]
-        do {
-            desserts = try await networkService.getDesserts()
-        } catch {
-            throw error
-        }
+        var desserts: [Dessert] = try await networkService.getDesserts()
 
         // Sort the desserts by name alphabetically
         desserts.sort { $0.name < $1.name }
@@ -29,12 +30,7 @@ class DataService {
     }
 
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
-        let dessertDetailsDTO: DessertDetailsDTO
-        do {
-            dessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
-        } catch {
-            throw error
-        }
+        let dessertDetailsDTO: DessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
 
         var instructions: [String] {
             var index = 0
@@ -49,33 +45,45 @@ class DataService {
         }
 
         var ingredients: [DessertDetails.Ingredient] {
-            var ingredients = [DessertDetails.Ingredient]()
-
             // When the JSON does not have an ingredient at one of the 20 ingredient properties the api either has an empty pair of quotes or null value
             // This standardizes the empty properties such that every property with no value will store empty quotes
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient1 ?? "", measure: dessertDetailsDTO.strMeasure1 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient2 ?? "", measure: dessertDetailsDTO.strMeasure2 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient3 ?? "", measure: dessertDetailsDTO.strMeasure3 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient4 ?? "", measure: dessertDetailsDTO.strMeasure4 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient5 ?? "", measure: dessertDetailsDTO.strMeasure5 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient6 ?? "", measure: dessertDetailsDTO.strMeasure6 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient7 ?? "", measure: dessertDetailsDTO.strMeasure7 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient8 ?? "", measure: dessertDetailsDTO.strMeasure8 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient9 ?? "", measure: dessertDetailsDTO.strMeasure9 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient10 ?? "", measure: dessertDetailsDTO.strMeasure10 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient11 ?? "", measure: dessertDetailsDTO.strMeasure11 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient12 ?? "", measure: dessertDetailsDTO.strMeasure12 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient13 ?? "", measure: dessertDetailsDTO.strMeasure13 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient14 ?? "", measure: dessertDetailsDTO.strMeasure14 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient15 ?? "", measure: dessertDetailsDTO.strMeasure15 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient16 ?? "", measure: dessertDetailsDTO.strMeasure16 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient17 ?? "", measure: dessertDetailsDTO.strMeasure17 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient18 ?? "", measure: dessertDetailsDTO.strMeasure18 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient19 ?? "", measure: dessertDetailsDTO.strMeasure19 ?? ""))
-            ingredients.append(DessertDetails.Ingredient(name: dessertDetailsDTO.strIngredient20 ?? "", measure: dessertDetailsDTO.strMeasure20 ?? ""))
+            let ingredientTuples: [(KeyPath<DessertDetailsDTO, String?>, KeyPath<DessertDetailsDTO, String?>)] = [
+                (\DessertDetailsDTO.strIngredient1, \DessertDetailsDTO.strMeasure1),
+                (\DessertDetailsDTO.strIngredient2, \DessertDetailsDTO.strMeasure2),
+                (\DessertDetailsDTO.strIngredient3, \DessertDetailsDTO.strMeasure3),
+                (\DessertDetailsDTO.strIngredient4, \DessertDetailsDTO.strMeasure4),
+                (\DessertDetailsDTO.strIngredient5, \DessertDetailsDTO.strMeasure5),
+                (\DessertDetailsDTO.strIngredient6, \DessertDetailsDTO.strMeasure6),
+                (\DessertDetailsDTO.strIngredient7, \DessertDetailsDTO.strMeasure7),
+                (\DessertDetailsDTO.strIngredient8, \DessertDetailsDTO.strMeasure8),
+                (\DessertDetailsDTO.strIngredient9, \DessertDetailsDTO.strMeasure9),
+                (\DessertDetailsDTO.strIngredient10, \DessertDetailsDTO.strMeasure10),
+                (\DessertDetailsDTO.strIngredient11, \DessertDetailsDTO.strMeasure11),
+                (\DessertDetailsDTO.strIngredient12, \DessertDetailsDTO.strMeasure12),
+                (\DessertDetailsDTO.strIngredient13, \DessertDetailsDTO.strMeasure13),
+                (\DessertDetailsDTO.strIngredient14, \DessertDetailsDTO.strMeasure14),
+                (\DessertDetailsDTO.strIngredient15, \DessertDetailsDTO.strMeasure15),
+                (\DessertDetailsDTO.strIngredient16, \DessertDetailsDTO.strMeasure16),
+                (\DessertDetailsDTO.strIngredient17, \DessertDetailsDTO.strMeasure17),
+                (\DessertDetailsDTO.strIngredient18, \DessertDetailsDTO.strMeasure18),
+                (\DessertDetailsDTO.strIngredient19, \DessertDetailsDTO.strMeasure19),
+                (\DessertDetailsDTO.strIngredient20, \DessertDetailsDTO.strMeasure20)
+            ]
 
-            // Now remove any ingredients that contain empty strings
-            ingredients.removeAll(where: { $0.name == "" })
+            var ingredients = [DessertDetails.Ingredient]()
+
+            for ingredientTuple in ingredientTuples {
+                guard
+                    let ingredient = dessertDetailsDTO[keyPath: ingredientTuple.0],
+                    !ingredient.isEmpty
+                else {
+                    continue
+                }
+
+                let measure = dessertDetailsDTO[keyPath: ingredientTuple.1] ?? ""
+
+                ingredients.append(DessertDetails.Ingredient(name: ingredient, measure: measure))
+            }
 
             return ingredients
         }

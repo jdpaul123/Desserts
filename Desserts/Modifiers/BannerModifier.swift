@@ -8,20 +8,20 @@
 import SwiftUI
 
 enum BannerType {
-    case Info
-    case Warning
-    case Success
-    case Error
+    case info
+    case warning
+    case success
+    case error
 
     var tintColor: Color {
         switch self {
-        case .Info:
+        case .info:
             return Color(red: 67/255, green: 154/255, blue: 215/255)
-        case .Success:
+        case .success:
             return Color.green
-        case .Warning:
+        case .warning:
             return Color.yellow
-        case .Error:
+        case .error:
             return Color.red
         }
     }
@@ -34,7 +34,7 @@ struct BannerModifier: ViewModifier {
         var detail: String
         var type: BannerType
 
-        init(title: String = "", detail: String = "", type: BannerType = .Error) {
+        init(title: String = "", detail: String = "", type: BannerType = .error) {
             self.title = title
             self.detail = detail
             self.type = type
@@ -84,34 +84,34 @@ struct BannerModifier: ViewModifier {
     }
 }
 
-struct ExampleViewForBannerModifier: View {
+struct BannerModifierPreviewView: View {
     @State var showBanner = true
     @State var bannerData = BannerModifier.BannerData(title: "Default Title",
                                                       detail: "This is the detail text for the action you just did or whatever blah blah blah blah blah",
-                                                      type: .Info)
+                                                      type: .info)
 
     var body: some View {
         VStack(alignment: .center, spacing: 4) {
             Button(action: {
-                self.bannerData.type = .Info
+                self.bannerData.type = .info
                 self.showBanner = true
             }) {
                 Text("[ Info Banner ]")
             }
             Button(action: {
-                self.bannerData.type = .Success
+                self.bannerData.type = .success
                 self.showBanner = true
             }) {
                 Text("[ Success Banner ]")
             }
             Button(action: {
-                self.bannerData.type = .Warning
+                self.bannerData.type = .warning
                 self.showBanner = true
             }) {
                 Text("[ Warning Banner ]")
             }
             Button(action: {
-                self.bannerData.type = .Error
+                self.bannerData.type = .error
                 self.showBanner = true
             }) {
                 Text("[ Error Banner ]")
@@ -121,5 +121,5 @@ struct ExampleViewForBannerModifier: View {
 }
 
 #Preview {
-    ExampleViewForBannerModifier()
+    BannerModifierPreviewView()
 }

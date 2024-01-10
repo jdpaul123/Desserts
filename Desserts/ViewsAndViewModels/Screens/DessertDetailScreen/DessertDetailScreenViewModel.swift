@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class DessertDetailScreenViewModel {
+final class DessertDetailScreenViewModel {
     private let id: String
     let imageURL: URL
     var name: String
@@ -46,9 +46,9 @@ class DessertDetailScreenViewModel {
             ingredients = dessert.ingredients
             status = .success
         } catch {
-            guard let error = error as? ErrorMessage else { return }
+            guard let error = error as? NetworkException else { return }
             bannerData.title = "Error"
-            bannerData.detail = error.rawValue
+            bannerData.detail = error.userMessage
             showBanner = true
             status = .failed
         }

@@ -7,55 +7,52 @@
 
 import Foundation
 
-class NetworkService {
+protocol NetworkService: AnyObject {
+    func getDesserts() async throws -> [Dessert]
+    func getDessertDetails(for dessertID: String) async throws -> DessertDetailsDTO
+    func getImageData(from url: URL) async -> Data?
+}
+
+final class DefaultNetworkService: NetworkService {
     private let baseURLString = "https://themealdb.com/api/json/v1/1/"
 
     func getDesserts() async throws -> [Dessert] {
         let endpoint = "\(baseURLString)filter.php?c=Dessert"
-        let desserts: DessertsDTO
 
-        do {
-            desserts = try await decode(from: endpoint)
-        } catch {
-            throw error
-        }
-
-        return desserts.desserts
+        let response: DessertsDTO = try await fetchAndDecode(from: endpoint)
+        return response.desserts
     }
 
     func getDessertDetails(for dessertID: String) async throws -> DessertDetailsDTO {
         let endpoint = "\(baseURLString)lookup.php?i=\(dessertID)"
-        let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO
+        let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO = try await fetchAndDecode(from: endpoint)
 
-        do {
-            dessertDetailsWrapperDTO = try await decode(from: endpoint)
-        } catch {
-            throw error
+        guard let dessert = dessertDetailsWrapperDTO.meals.first else {
+            throw NetworkException.badIndex
         }
-
-        return dessertDetailsWrapperDTO.meals[0]
+        return dessert
     }
 
     /// Generic function to decode JSON data
-    private func decode<T: Decodable>(from urlString: String) async throws -> T {
+    private func fetchAndDecode<T: Decodable>(from urlString: String) async throws -> T {
         guard let url = URL(string: urlString) else {
-            throw ErrorMessage.invalidURL
+            throw NetworkException.invalidURL
         }
 
         let decodedData: T
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw ErrorMessage.invalidResponse
+                throw NetworkException.invalidResponse
             }
             let decoder = JSONDecoder()
             do {
                 decodedData = try decoder.decode(T.self, from: data)
             } catch {
-                throw ErrorMessage.invalidData
+                throw NetworkException.invalidData
             }
         } catch {
-            throw ErrorMessage.unableToComplete
+            throw NetworkException.unableToComplete
         }
 
         return decodedData

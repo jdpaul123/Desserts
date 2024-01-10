@@ -11,11 +11,11 @@ import Foundation
 @Observable
 class Injector {
     static let shared = Injector()
-    private let networkService = NetworkService()
+
+    private let networkService: NetworkService = DefaultNetworkService()
     let dataService: DataService
 
     init() {
-        // Set the networkService as a weak variable to avoid a reference cycle
-        dataService = DataService(networkService: networkService)
+        dataService = DefaultDataService(networkService: networkService)
     }
 }

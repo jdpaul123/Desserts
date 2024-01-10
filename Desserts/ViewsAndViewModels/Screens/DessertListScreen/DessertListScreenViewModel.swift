@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class DessertListScreenViewModel {
+final class DessertListScreenViewModel {
     var status: LoadingStates = .loading
     var desserts: [Dessert]
 
@@ -35,9 +35,9 @@ class DessertListScreenViewModel {
             desserts = try await injector.dataService.getDesserts()
             status = .success
         } catch {
-            guard let error = error as? ErrorMessage else { return }
+            guard let error = error as? NetworkException else { return }
             bannerData.title = "Error"
-            bannerData.detail = error.rawValue
+            bannerData.detail = error.userMessage
             showBanner = true
             status = .failed
         }
