@@ -25,6 +25,11 @@ JD Paul
 * (650)619-6984
 * jdpaul123@gmail.com
 
+## Usage
+1. Download the .zip for this repo.
+2. Open the Desserts.xcodeproj file in Xcode.
+3. Press Cmd+R to run the project in a iPhone or iPad simulator or physical device.
+
 ## Software and Language Versions
 * Xcode: 15.1
 * Swift: 5.9
