@@ -197,7 +197,7 @@ final class NetworkServiceTests: XCTestCase {
 
     // MARK: Test Get Image Data
     /// In getImageData(from:), test that when URLSession.shared.data(from: url) throws an error getImageData(from:) throws a NetworkException.unableToComplete error
-    func testGetImageDataGetsURLAndReturnsData() async {
+    func testGetImageData_WhenGivenGoodData_ReturnsDataSuccessfully() async {
         // Given
         let data = UIImage(resource: .test).pngData()!
         let expectedResult = (data, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)
@@ -216,7 +216,7 @@ final class NetworkServiceTests: XCTestCase {
     }
 
     /// In getImageData(from:), test that when URLSession.shared.data(from: url) throws an error getImageData(from:) throws a NetworkException.unableToComplete error
-    func testBadGetImageDataRequestToURLSessionThrowsUnableToComplete() async {
+    func testGetImageData_WhenURLSessionThrowsError_GetImageDataThrowsUnableToComplete() async {
         // Given
         let mockSession = URLSessionMock(shouldThrow: true)
         let sut = DefaultNetworkService(session: mockSession)
@@ -238,7 +238,7 @@ final class NetworkServiceTests: XCTestCase {
     }
 
     /// In getImageData(from:), test that when the response is not 200 getImageData(from:) throws a NetworkException.invalidResponse error
-    func testGetImageDataGetsBadHTTPCodeAndThrowsInvalidResponse() async {
+    func testGetImageData_WhenHTTPResponseIsNot200_ThrowsInvalidResponse() async {
         // Given
         let statusCode = 201
         let response = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!
