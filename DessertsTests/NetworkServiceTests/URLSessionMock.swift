@@ -17,8 +17,12 @@ extension NetworkServiceTests {
         private let expectedResult: (Data, URLResponse)
         private let shouldThrow: Bool
 
-        init(expectedResult: (Data, URLResponse), shouldThrow: Bool = false) {
-            self.expectedResult = expectedResult
+        init(expectedResult: (Data, URLResponse)? = nil, shouldThrow: Bool = false) {
+            if let expectedResult {
+                self.expectedResult = expectedResult
+            } else {
+                self.expectedResult = (Data(), URLResponse())
+            }
             self.shouldThrow = shouldThrow
         }
 

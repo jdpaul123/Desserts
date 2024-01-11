@@ -46,20 +46,24 @@ final class DefaultNetworkService: NetworkService {
             throw NetworkException.invalidURL
         }
 
-        let decodedData: T
+        let data: Data
+        let response: URLResponse
         do {
-            let (data, response) = try await session.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw NetworkException.invalidResponse
-            }
-            let decoder = JSONDecoder()
-            do {
-                decodedData = try decoder.decode(T.self, from: data)
-            } catch {
-                throw NetworkException.invalidData
-            }
+            (data, response) = try await session.data(from: url)
         } catch {
             throw NetworkException.unableToComplete
+        }
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkException.invalidResponse
+        }
+
+        let decodedData: T
+        let decoder = JSONDecoder()
+        do {
+            decodedData = try decoder.decode(T.self, from: data)
+        } catch {
+            throw NetworkException.invalidData
         }
 
         return decodedData
@@ -71,12 +75,14 @@ final class DefaultNetworkService: NetworkService {
         let response: URLResponse
         do {
             (imageData, response) = try await session.data(from: url)
-            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-                throw NetworkException.invalidResponse
-            }
         } catch {
             throw NetworkException.unableToComplete
         }
+
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw NetworkException.invalidResponse
+        }
+
         return imageData
     }
 }
