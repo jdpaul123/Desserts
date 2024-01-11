@@ -9,7 +9,7 @@ import Foundation
 
 struct DessertDetails {
     // 1-1 relationship between ingredients and measures
-    struct Ingredient: Decodable, Identifiable {
+    struct Ingredient: Codable, Identifiable {
         init(name: String, measure: String, id: UUID = UUID()) {
             self.id = id
             self.name = name

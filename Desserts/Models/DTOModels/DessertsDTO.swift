@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DessertsDTO: Decodable {
+struct DessertsDTO: Codable {
     enum CodingKeys: String, CodingKey {
         case desserts = "meals"
     }

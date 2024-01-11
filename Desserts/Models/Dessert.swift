@@ -8,7 +8,7 @@
 import Foundation
 
 // Dessert acts as both a data transfer object and a domain model.
-struct Dessert: Decodable, Identifiable {
+struct Dessert: Codable, Identifiable, Equatable {
     enum CodingKeys: String, CodingKey {
         case id = "idMeal"
         case name = "strMeal"

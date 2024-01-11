@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct DessertDetailsWrapperDTO: Decodable {
+struct DessertDetailsWrapperDTO: Codable {
     let meals: [DessertDetailsDTO]
 }
 
-struct DessertDetailsDTO: Decodable {
+struct DessertDetailsDTO: Codable {
     let idMeal: String
     let strMeal: String
     let strInstructions: String
