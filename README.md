@@ -35,7 +35,7 @@ JD Paul
 * Swift: 5.9
 * iOS target version: 17.2
 
-## Features meeting requirements:
+## Features meeting requirements
 * The app gets data from the two endpoints outlined in the project specification to get the list of desserts and then the details about the dessert:
 https://themealdb.com/api/json/v1/1/filter.php?c=Dessert
 https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
@@ -45,7 +45,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * Null values from the API are filtered out in the DataService method getDessertDetails(for:).
 * The app only utilizes first-party frameworks that come with Xcode. No packages were used to aid development.
 
-## Features exceeding requirements:
+## Features exceeding requirements
 ### Architecture
 * The app's architecture follows MVVM principles.
 * The app utilizes principles of dependency injection avoiding hidden dependencies by passing them in to class/struct initializers and function parameters.
@@ -58,7 +58,12 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * A mock version of URLSession is used to isolate the system under test, DefaultNetworkService, and simulate different responses from URLSession.
 * A data stub class is used to provide data for the tests.
 * The tests are focused on making sure that functions work as intended when they succeed and fail gracefully (ex. throw an error).
-* In the future, tests can be expanded to the other services and view models. Views can be tested using snapshot testing. The Injector class can be built out further to accomidate injecting mock versions of dependencies for cleaner testing.
+
+### Future considerations for testing
+* Tests can be expanded to the other services and view models.
+* Views can be tested using snapshot testing.
+* The Injector class can be built out further to accomidate injecting mock versions of dependencies for cleaner testing.
+* The Injector class can be used to accomidate SwiftUI Previews with mock services and local data to avoid using the network and isolate the view that is being previewed.
 
 ### User Interface
 * Dessert Images: The app loads images in both the DessertListScreen and DessertDetailScreen in order to provide a better user experience. There is logic in the DessertListScreenViewModel to make sure images are only ever loaded once to avoid unnecessary hardware stress and internet data usage.
