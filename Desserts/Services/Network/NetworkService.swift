@@ -15,6 +15,11 @@ protocol NetworkService: AnyObject {
 
 final class DefaultNetworkService: NetworkService {
     private let baseURLString = "https://themealdb.com/api/json/v1/1/"
+    private let session: Session
+
+    init(session: Session = URLSession.shared) {
+        self.session = session
+    }
 
     /// Get all the desserts
     func getDesserts() async throws -> [Dessert] {
@@ -43,7 +48,7 @@ final class DefaultNetworkService: NetworkService {
 
         let decodedData: T
         do {
-            let (data, response) = try await URLSession.shared.data(from: url)
+            let (data, response) = try await session.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 throw NetworkException.invalidResponse
             }
@@ -65,7 +70,7 @@ final class DefaultNetworkService: NetworkService {
         let imageData: Data
         let response: URLResponse
         do {
-            (imageData, response) = try await URLSession.shared.data(from: url)
+            (imageData, response) = try await session.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 throw NetworkException.invalidResponse
             }
