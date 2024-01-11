@@ -31,7 +31,7 @@ JD Paul
 * iOS target version: 17.2
 
 ## Features meeting requirements:
-* The app hits two endpoints to get the list of desserts and then the details about the dessert:
+* The app gets data from the two endpoints outlined in the project specification to get the list of desserts and then the details about the dessert:
 https://themealdb.com/api/json/v1/1/filter.php?c=Dessert
 https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * Desserts are sorted alphabetically in DataService’s getDesserts() method.
