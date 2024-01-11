@@ -49,7 +49,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * The views utalize composable SwiftUI views to modularize the parts that are used to build each screen. This allows views such as the Loading View to be used on both the Dessert List Screen and the Dessert Detial Screen.
 
 ### Testing
-* Tests are written for DefaultNetworkService.
+* Unit tests are written to test DefaultNetworkService using the XCTest framework.
 * Created a mock version of URLSession to isolate the system under test, DefaultNetworkService, and simulate different responses from URLSession.
 * Created a stub to provide data for the tests.
 * The tests are focused on making sure that functions work as intended when they succeed and when they fail (ex. throw an error).
