@@ -15,7 +15,7 @@
 <br>
 Hello hiring manager or engineer reviewing my project,
 <br><br>
-  &emsp; I'm excited to submit my take home project for the Fetch iOS Engineer position. I have had a great time considing the architecture, testability, and UI of this app as I planned and built it. If you have any questions about my thought process, code, or design please don't hessitate to contact me. Thank you for this opportunity!
+  &emsp; I'm excited to submit my take home project for the Fetch iOS Engineer position. I have had a great time considering the architecture, testability, and UI of this app as I planned and built it. If you have any questions about my thought process, code, or design please do not hesitate to contact me. Thank you for this opportunity!
 <br><br>
 Best,
 <br>
@@ -38,7 +38,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * The list of desserts are displayed in the DessertListScreen.
 * The meal name, instructions, and ingredients/measurements of each dessert are displayed in the DessertDetailScreen.
 * Null values from the API are filtered out in the DataService method getDessertDetails(for:).
-* The app only utilizes first pary frameworks that come with Xcode. No packages were used to aid development.
+* The app only utilizes first-party frameworks that come with Xcode. No packages were used to aid development.
 
 ## Features exceeding requirements:
 ### Architecture
@@ -46,7 +46,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * The app utilizes principles of dependency injection avoiding hidden dependencies by passing them in to class/struct initializers and function parameters.
 * There is a network and data service to seperate concerns between parts of the app. It decouples the view from the network and data logic making the app more maintainable and testable.
 * The service classes conform to protocols in order to allow for the creation of mock versions when unit testing.
-* The views utalize composable SwiftUI views to modularize the parts that are used to build each screen. This allows views such as the Loading View to be used on both the Dessert List Screen and the Dessert Detial Screen.
+* The views utilize composable SwiftUI views to modularize the parts that are used to build each screen. This allows views such as the Loading View to be used on both the Dessert List Screen and the Dessert Detial Screen.
 
 ### Testing
 * Unit tests are written to verify the functionality of DefaultNetworkService using the XCTest framework.
