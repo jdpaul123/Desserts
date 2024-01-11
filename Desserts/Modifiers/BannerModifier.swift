@@ -7,37 +7,15 @@
 
 import SwiftUI
 
-enum BannerType {
-    case info
-    case warning
-    case success
-    case error
-
-    var tintColor: Color {
-        switch self {
-        case .info:
-            return Color(red: 67/255, green: 154/255, blue: 215/255)
-        case .success:
-            return Color.green
-        case .warning:
-            return Color.yellow
-        case .error:
-            return Color.red
-        }
-    }
-}
-
 // This is the banner modifier from my UO Kiosk app
 struct BannerModifier: ViewModifier {
     struct BannerData: Equatable {
         var title: String
         var detail: String
-        var type: BannerType
 
-        init(title: String = "", detail: String = "", type: BannerType = .error) {
+        init(title: String = "", detail: String = "") {
             self.title = title
             self.detail = detail
-            self.type = type
         }
     }
 
@@ -61,7 +39,7 @@ struct BannerModifier: ViewModifier {
                     }
                     .foregroundColor(Color.white)
                     .padding(12)
-                    .background(data.type.tintColor)
+                    .background(.red)
                     .cornerRadius(8)
                     Spacer()
                 }
@@ -87,34 +65,14 @@ struct BannerModifier: ViewModifier {
 struct BannerModifierPreviewView: View {
     @State var showBanner = true
     @State var bannerData = BannerModifier.BannerData(title: "Default Title",
-                                                      detail: "This is the detail text for the action you just did or whatever blah blah blah blah blah",
-                                                      type: .info)
+                                                      detail: "This is the detail text for the action you just did or whatever blah blah blah blah blah")
 
     var body: some View {
-        VStack(alignment: .center, spacing: 4) {
+        VStack {
             Button(action: {
-                self.bannerData.type = .info
                 self.showBanner = true
             }) {
-                Text("[ Info Banner ]")
-            }
-            Button(action: {
-                self.bannerData.type = .success
-                self.showBanner = true
-            }) {
-                Text("[ Success Banner ]")
-            }
-            Button(action: {
-                self.bannerData.type = .warning
-                self.showBanner = true
-            }) {
-                Text("[ Warning Banner ]")
-            }
-            Button(action: {
-                self.bannerData.type = .error
-                self.showBanner = true
-            }) {
-                Text("[ Error Banner ]")
+                Text("Error Banner")
             }
         }.banner(data: $bannerData, show: $showBanner)
     }

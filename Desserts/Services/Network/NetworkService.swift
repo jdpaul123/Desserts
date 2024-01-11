@@ -26,6 +26,7 @@ final class DefaultNetworkService: NetworkService {
         let endpoint = "\(baseURLString)filter.php?c=Dessert"
 
         let response: DessertsDTO = try await fetchAndDecode(from: endpoint)
+
         return response.desserts
     }
 
@@ -37,6 +38,7 @@ final class DefaultNetworkService: NetworkService {
         guard let dessert = dessertDetailsWrapperDTO.meals.first else {
             throw NetworkException.badIndex
         }
+
         return dessert
     }
 
