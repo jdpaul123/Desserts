@@ -15,9 +15,9 @@ final class NetworkServiceTests: XCTestCase {
     /// In getDesserts(from:), test that the function works
     func testGetDesserts_WhenGivenGoodDataAndNetworkResponse_ReturnsExpectedData() async {
         // Given
-        let expectedResult = NetworkServiceTestStub.shared.desserts
+        let expectedResult = NetworkServiceTestsStub.shared.desserts
 
-        let data = try! JSONEncoder().encode(NetworkServiceTestStub.shared.dessertsDTO)
+        let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.dessertsDTO)
         let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!))
         let sut = DefaultNetworkService(session: mockSession)
 
@@ -30,9 +30,9 @@ final class NetworkServiceTests: XCTestCase {
 
     func testGetDesserts_WhenBadHTTPStatusCode_ThrowsInvalidResponse() async {
         // Given
-        let expectedResult = NetworkServiceTestStub.shared.desserts
+        let expectedResult = NetworkServiceTestsStub.shared.desserts
 
-        let data = try! JSONEncoder().encode(NetworkServiceTestStub.shared.dessertsDTO)
+        let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.dessertsDTO)
         let statusCode = 201
         let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!))
         let sut = DefaultNetworkService(session: mockSession)
@@ -100,9 +100,9 @@ final class NetworkServiceTests: XCTestCase {
     /// In getDesserts(from:), test that the function works
     func testGetDessertDetails_WhenGivenGoodDataAndNetworkResponse_ReturnsExpectedData() async {
         // Given
-        let expectedResult = NetworkServiceTestStub.shared.dessertDetailsDTO
+        let expectedResult = NetworkServiceTestsStub.shared.dessertDetailsDTO
 
-        let data = try! JSONEncoder().encode(NetworkServiceTestStub.shared.dessertDetailsWrapperDTO)
+        let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.dessertDetailsWrapperDTO)
         let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!))
         let sut = DefaultNetworkService(session: mockSession)
 
@@ -113,11 +113,27 @@ final class NetworkServiceTests: XCTestCase {
         XCTAssertEqual(response, expectedResult)
     }
 
+    func testGetDessertDetails_WhenTheDessertDetailsWrapperDTOIsEmpty_ThrowsBadIndex() async {
+        // Given
+        let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.emptyDessertDetailsWrapperDTO)
+        let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!))
+        let sut = DefaultNetworkService(session: mockSession)
+
+        // When
+        var caughtError: NetworkException?
+        do {
+            _ = try await sut.getDessertDetails(for: UUID().uuidString)
+        } catch {
+            caughtError = error as? NetworkException
+        }
+
+        // Then
+        XCTAssertEqual(caughtError, .badIndex)
+    }
+
     func testGetDessertDetails_WhenBadHTTPStatusCode_ThrowsInvalidResponse() async {
         // Given
-        let expectedResult = NetworkServiceTestStub.shared.dessertDetailsDTO
-
-        let data = try! JSONEncoder().encode(NetworkServiceTestStub.shared.dessertDetailsDTO)
+        let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.dessertDetailsDTO)
         let statusCode = 201
         let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!))
         let sut = DefaultNetworkService(session: mockSession)
@@ -247,37 +263,4 @@ final class NetworkServiceTests: XCTestCase {
         }
         XCTAssertEqual(caughtError, .invalidResponse)
     }
-}
-
-struct NetworkServiceTestStub {
-    static let shared = NetworkServiceTestStub()
-    private let url = URL(string: "https://youtube.com")!
-
-    let desserts: [Dessert]
-    let dessertsDTO: DessertsDTO
-
-    let dessertDetailsDTO: DessertDetailsDTO
-    let dessertDetailsWrapperDTO: DessertDetailsWrapperDTO
-
-    init() {
-        desserts = [
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url),
-            Dessert(id: UUID().uuidString, name: UUID().uuidString, thumbnailURL: url)
-        ]
-
-        dessertsDTO = DessertsDTO(desserts: desserts)
-
-        dessertDetailsDTO = DessertDetailsDTO(idMeal: UUID().uuidString, strMeal: UUID().uuidString, strInstructions: UUID().uuidString,
-                                              strIngredient1: UUID().uuidString, strIngredient2: UUID().uuidString, strIngredient3: UUID().uuidString, strIngredient4: UUID().uuidString, strIngredient5: UUID().uuidString, strIngredient6: UUID().uuidString, strIngredient7: nil, strIngredient8: nil, strIngredient9: nil, strIngredient10: nil, strIngredient11: nil, strIngredient12: nil, strIngredient13: nil, strIngredient14: nil, strIngredient15: nil, strIngredient16: nil, strIngredient17: nil, strIngredient18: nil, strIngredient19: nil, strIngredient20: nil,
-                                              strMeasure1: UUID().uuidString, strMeasure2: UUID().uuidString, strMeasure3: UUID().uuidString, strMeasure4: UUID().uuidString, strMeasure5: UUID().uuidString, strMeasure6: nil, strMeasure7: nil, strMeasure8: nil, strMeasure9: nil, strMeasure10: nil, strMeasure11: nil, strMeasure12: nil, strMeasure13: nil, strMeasure14: nil, strMeasure15: nil, strMeasure16: nil, strMeasure17: nil, strMeasure18: nil, strMeasure19: nil, strMeasure20: nil)
-
-        dessertDetailsWrapperDTO = DessertDetailsWrapperDTO(meals: [dessertDetailsDTO])
-    }
-
 }
