@@ -24,7 +24,7 @@ Seperation of concerns using a network and data service to decouple the app maki
 
 Unit tests:
 - Tests are written that mock the URLSession dependency in order to test the DefaultNetworkService.
-- Tests are written to make that functions work as intended when they succeed and when they fail (ex. throw and error).
+- The tests are thourough and focus on making sure that functions work as intended when they succeed and when they fail (ex. throw an error).
 
 Dessert Images. The app loads images in both the DessertListScreen and DessertDetailScreen in order to provide a better user experience. There is logic in the DessertListScreenViewModel to make sure images are only ever loaded once to avoid unnecessary hardware stress and internet data usage.
 
