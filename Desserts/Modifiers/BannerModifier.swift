@@ -46,17 +46,26 @@ struct BannerModifier: ViewModifier {
                 .padding()
                 .animation(.easeInOut, value: 0)
                 .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+                .gesture(DragGesture(minimumDistance: 0, coordinateSpace: .local)
+                    .onEnded({ value in
+                        if value.translation.height < 0 {
+                            withAnimation {
+                                self.show = false
+                            }
+                        }
+                    }))
                 .onTapGesture {
                     withAnimation {
                         self.show = false
                     }
-                }.onAppear(perform: {
+                }
+                .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
                         withAnimation {
                             self.show = false
                         }
                     }
-                })
+                }
             }
         }
     }
