@@ -12,7 +12,7 @@ struct DessertsApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                DessertListScreen(vm: DessertListScreenViewModel())
+                DessertListScreen(viewModel: DessertListScreenViewModel())
             }
         }
     }

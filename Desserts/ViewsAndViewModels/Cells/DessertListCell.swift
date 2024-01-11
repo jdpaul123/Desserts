@@ -8,23 +8,23 @@
 import SwiftUI
 
 struct DessertListCell: View {
-    @State private var vm: DessertListCellViewModel
+    @State private var viewModel: DessertListCellViewModel
 
-    init(vm: DessertListCellViewModel) {
-        self.vm = vm
+    init(viewModel: DessertListCellViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
         HStack {
             // Using Image instead of Async image to avoid calling the API redundantly when scrolling over content that was already loaded
-            Image(uiImage: .init(data: vm.imageData)!)
+            Image(uiImage: .init(data: viewModel.imageData)!)
                 .resizable()
                 .frame(width: 115, height: 115)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
-            Text(vm.name)
+            Text(viewModel.name)
         }
         .task {
-            await vm.loadImageIfNeeded()
+            await viewModel.loadImageIfNeeded()
         }
     }
 }
@@ -41,5 +41,5 @@ struct DessertListCellDataStub {
 }
 
 #Preview {
-    DessertListCell(vm: DessertListCellDataStub.shared.makeDessertListCellViewModel())
+    DessertListCell(viewModel: DessertListCellDataStub.shared.makeDessertListCellViewModel())
 }

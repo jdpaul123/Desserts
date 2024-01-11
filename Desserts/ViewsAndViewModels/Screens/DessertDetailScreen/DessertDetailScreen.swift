@@ -8,31 +8,31 @@
 import SwiftUI
 
 struct DessertDetailScreen: View {
-    @State private var vm: DessertDetailScreenViewModel
+    @State private var viewModel: DessertDetailScreenViewModel
 
-    init(vm: DessertDetailScreenViewModel) {
-        self.vm = vm
+    init(viewModel: DessertDetailScreenViewModel) {
+        self.viewModel = viewModel
     }
 
     let verticalPadding: CGFloat = 4
     let horizontalPadding: CGFloat = 20
 
     var body: some View {
-        switch vm.status {
+        switch viewModel.status {
         case .loading:
             LoadingView()
             .task {
-                try? await vm.fetchDessertDetails()
+                try? await viewModel.fetchDessertDetails()
             }
         case .failed:
             PullToRefreshView()
                 .refreshable {
-                    try? await vm.fetchDessertDetails()
+                    try? await viewModel.fetchDessertDetails()
                 }
-                .banner(data: $vm.bannerData, show: $vm.showBanner)
+                .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
         case .success:
             List {
-                AsyncImage(url: vm.imageURL) { image in
+                AsyncImage(url: viewModel.imageURL) { image in
                     image
                         .resizable()
                 } placeholder: {
@@ -43,7 +43,7 @@ struct DessertDetailScreen: View {
                 .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
                 .clipped()
                 Section {
-                    ForEach(vm.ingredients) { ingredient in
+                    ForEach(viewModel.ingredients) { ingredient in
                         HStack {
                             Text(ingredient.name)
                             Spacer()
@@ -57,7 +57,7 @@ struct DessertDetailScreen: View {
                         .font(.title2)
                 }
                 Section {
-                    ForEach(vm.instructions, id: \.self) { instruction in
+                    ForEach(viewModel.instructions, id: \.self) { instruction in
                         Text(instruction)
                             .padding(.init(top: verticalPadding, leading: horizontalPadding, bottom: verticalPadding, trailing: horizontalPadding))
                     }
@@ -68,7 +68,7 @@ struct DessertDetailScreen: View {
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle(vm.name)
+            .navigationTitle(viewModel.name)
         }
     }
 }
@@ -112,6 +112,6 @@ struct DessertDetailScreenPreviewStub {
 
 #Preview {
     NavigationStack {
-        DessertDetailScreen(vm: DessertDetailScreenViewModel(dessert: DessertDetailScreenPreviewStub.shared.dessert, imageURL: DessertDetailScreenPreviewStub.shared.imageURL))
+        DessertDetailScreen(viewModel: DessertDetailScreenViewModel(dessert: DessertDetailScreenPreviewStub.shared.dessert, imageURL: DessertDetailScreenPreviewStub.shared.imageURL))
     }
 }

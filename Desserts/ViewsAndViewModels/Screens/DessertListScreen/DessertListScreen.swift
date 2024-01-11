@@ -8,36 +8,36 @@
 import SwiftUI
 
 struct DessertListScreen: View {
-    @State private var vm: DessertListScreenViewModel
+    @State private var viewModel: DessertListScreenViewModel
 
-    init(vm: DessertListScreenViewModel) {
-        self.vm = vm
+    init(viewModel: DessertListScreenViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
-        switch vm.status {
+        switch viewModel.status {
         case .loading:
             LoadingView()
                 .task {
-                    try? await vm.fetchDesserts()
+                    try? await viewModel.fetchDesserts()
                 }
         case .failed:
             PullToRefreshView()
                 .refreshable {
-                    try? await vm.fetchDesserts()
+                    try? await viewModel.fetchDesserts()
                 }
-                .banner(data: $vm.bannerData, show: $vm.showBanner)
+                .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
         case .success:
             List {
-                ForEach(vm.searchResults) { dessert in
-                    NavigationLink(destination: DessertDetailScreen(vm: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
-                        DessertListCell(vm: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
+                ForEach(viewModel.searchResults) { dessert in
+                    NavigationLink(destination: DessertDetailScreen(viewModel: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
+                        DessertListCell(viewModel: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
                     }
                     .listRowSeparator(.hidden)
                 }
             }
             .navigationTitle("Desserts")
-            .searchable(text: $vm.searchText, placement: .navigationBarDrawer(displayMode: .always))
+            .searchable(text: $viewModel.searchText, placement: .navigationBarDrawer(displayMode: .always))
         }
     }
 }
@@ -60,6 +60,6 @@ struct DessertListScreenDataStub {
 
 #Preview {
     NavigationStack {
-        DessertListScreen(vm: DessertListScreenDataStub.shared.makeViewModel())
+        DessertListScreen(viewModel: DessertListScreenDataStub.shared.makeViewModel())
     }
 }
