@@ -13,7 +13,7 @@
 </div>
 
 <br>
-Hello,
+Hi,
 <br><br>
   &emsp; I'm excited to submit and share my take home project for the Fetch iOS Engineer position. I have had a great time considering the architecture, testability, and UI of this app as I planned and built it. If you have any questions about my thought process, code, or design please do not hesitate to contact me. Thank you for this opportunity!
 <br><br>
