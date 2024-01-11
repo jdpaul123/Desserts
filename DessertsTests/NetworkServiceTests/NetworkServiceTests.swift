@@ -11,6 +11,7 @@ import XCTest
 final class NetworkServiceTests: XCTestCase {
     private let url = URL(string: "https://youtube.com")!
 
+    // MARK: Test Get Desserts
     /// In getDesserts(from:), test that the function works
     func testGetDesserts_WhenGivenGoodDataAndNetworkResponse_ReturnsExpectedData() async {
         // Given
@@ -95,6 +96,7 @@ final class NetworkServiceTests: XCTestCase {
         XCTAssertEqual(caughtError, .invalidData)
     }
 
+    // MARK: Test Get Image Data
     /// In getImageData(from:), test that when URLSession.shared.data(from: url) throws an error getImageData(from:) throws a NetworkException.unableToComplete error
     func testGetImageDataGetsURLAndReturnsData() async {
         // Given
