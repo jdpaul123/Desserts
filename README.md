@@ -58,7 +58,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 ### User Interface
 * Dessert Images: The app loads images in both the DessertListScreen and DessertDetailScreen in order to provide a better user experience. There is logic in the DessertListScreenViewModel to make sure images are only ever loaded once to avoid unnecessary hardware stress and internet data usage.
 * Search Bar: There is a search bar on the DessertListScreen to allow for quicker access when the user already knows what dessert recipe you want to find.
-* Error Banner Modifier: There is an error banner modifier to show an error banner over the current view with a message about the error any time there is an error in the app (seen in image below on the right).
+* Error Banner Modifier: There is an error banner modifier to show an error banner over the current view with a message about the error any time there is an error in the app (seen in the middle image below).
 
 There are 3 possible screen states as data is loaded and formatted:
 1. Loading state which animates the app icon as a loading indicator
