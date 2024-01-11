@@ -63,7 +63,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 There are 3 possible screen states as data is loaded and formatted:
 1. Loading state which animates the app icon as a loading indicator
 2. Failed state which displays an error banner when the app fails to get the data and allows the user to pull-to-refresh the data. This would be useful if the user is not connected to internet then connects to the internet then pulls to refresh the data.
-3. Success state which shows the data
+3. Success state which shows the data (ie. the Dessert List Screen or Dessert Detail Screen)
 
 <div align="center">
   <p float="left">
