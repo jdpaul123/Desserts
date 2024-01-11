@@ -11,7 +11,7 @@ struct DessertDetailsWrapperDTO: Codable {
     let meals: [DessertDetailsDTO]
 }
 
-struct DessertDetailsDTO: Codable {
+struct DessertDetailsDTO: Codable, Equatable {
     let idMeal: String
     let strMeal: String
     let strInstructions: String
