@@ -1,6 +1,6 @@
 <div align="center">
   <h1 align="center">Fetch Dessert App</h1>
-  <h3 align="center">iOS take home project built using SwiftUI</h3>
+  <h3 align="center">iOS Coding Challenge project built using SwiftUI</h3>
   <a href="https://github.com/jdpaul123/Desserts/tree/main">
     <img src="https://github.com/jdpaul123/Desserts/blob/main/Desserts/Assets/Assets.xcassets/IceCreamDog.imageset/DogEatingIceCream1%202.jpeg" alt="Logo" width="200">
   </a>
@@ -15,7 +15,7 @@
 <br>
 Hi,
 <br><br>
-  &emsp; I'm excited to submit and share my take home project for the Fetch iOS Software Engineer position. I have had a great time considering the architecture, testability, and UI of this app as I planned and built it. If you have any questions about my thought process, code, or design please do not hesitate to contact me. Thank you for this opportunity!
+  &emsp; I'm excited to submit and share my iOS Coding Challenge project for the Fetch iOS Software Engineer position. I have had a great time considering the architecture, testability, and UI of this app as I planned and built it. If you have any questions about my thought process, code, or design please do not hesitate to contact me. Thank you for this opportunity!
 <br><br>
 Best,
 <br>
