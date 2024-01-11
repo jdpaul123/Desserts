@@ -39,6 +39,7 @@ struct DessertDetailScreen: View {
                     Image(.no)
                         .resizable()
                 }
+                .listRowInsets(EdgeInsets())
                 .scaledToFill()
                 .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
                 .clipped()
@@ -50,6 +51,7 @@ struct DessertDetailScreen: View {
                             Text(ingredient.measure)
                         }
                         .padding(.init(top: verticalPadding, leading: horizontalPadding, bottom: verticalPadding, trailing: horizontalPadding))
+                        .listRowSeparator(.hidden)
                     }
                 }
                 header: {
@@ -66,7 +68,6 @@ struct DessertDetailScreen: View {
                         .font(.title2)
                 }
             }
-            .listStyle(GroupedListStyle())
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(viewModel.name)
         }
