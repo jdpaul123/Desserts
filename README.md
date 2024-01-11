@@ -42,22 +42,22 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 
 ## Features exceeding requirements:
 ### Architecture
-* The app is built following MVVM principles.
-* Dependencies are injected.
+* The app's architecture follows MVVM principles.
+* The app utilizes principles of dependency injection avoiding hidden dependencies by passing them in to class/struct initializers and function parameters.
 * There is a network and data service to seperate concerns between parts of the app. It decouples the view from the network and data logic making the app more maintainable and testable.
 * The service classes conform to protocols in order to allow for the creation of mock versions when unit testing.
 * The views utalize composable SwiftUI views to modularize the parts that are used to build each screen. This allows views such as the Loading View to be used on both the Dessert List Screen and the Dessert Detial Screen.
 
 ### Testing
-* Unit tests are written to test DefaultNetworkService using the XCTest framework.
-* Created a mock version of URLSession to isolate the system under test, DefaultNetworkService, and simulate different responses from URLSession.
-* Created a stub to provide data for the tests.
-* The tests are focused on making sure that functions work as intended when they succeed and when they fail (ex. throw an error).
+* Unit tests are written to verify the functionality of DefaultNetworkService using the XCTest framework.
+* A mock version of URLSession is used to isolate the system under test, DefaultNetworkService, and simulate different responses from URLSession.
+* A data stub class is used to provide data for the tests.
+* The tests are focused on making sure that functions work as intended when they succeed and fail gracefully (ex. throw an error).
 
 ### User Interface
 * Dessert Images: The app loads images in both the DessertListScreen and DessertDetailScreen in order to provide a better user experience. There is logic in the DessertListScreenViewModel to make sure images are only ever loaded once to avoid unnecessary hardware stress and internet data usage.
-* Search Bar: Created a search bar on the DessertListScreen to allow for quicker access when the user already knows what dessert recipe you want to find.
-* Error Banner Modifier: Created an error banner modifier to show an error banner over the current view with a message about the error any time there is an error in the app (seen in image below on the right).
+* Search Bar: There is a search bar on the DessertListScreen to allow for quicker access when the user already knows what dessert recipe you want to find.
+* Error Banner Modifier: There is an error banner modifier to show an error banner over the current view with a message about the error any time there is an error in the app (seen in image below on the right).
 
 There are 3 possible screen states as data is loaded and formatted:
 1. Loading state which animates the app icon as a loading indicator
