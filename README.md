@@ -67,8 +67,8 @@ There are 3 possible screen states as data is loaded and formatted:
 
 <div align="center">
   <p float="left">
-    <img src="https://github.com/jdpaul123/Desserts/blob/main/DessertsImages/SuccessDessertListView.png" alt="Success State for the Dessert List Screen" width="200"/>
-    <img src="https://github.com/jdpaul123/Desserts/blob/main/DessertsImages/LoadingView.png" alt="Loading State with spinning dog icon" width="200"/>
+        <img src="https://github.com/jdpaul123/Desserts/blob/main/DessertsImages/LoadingView.png" alt="Loading State with spinning dog icon" width="200"/>
     <img src="https://github.com/jdpaul123/Desserts/blob/main/DessertsImages/FailedViewWithBanner.png" alt="Failed State with Error Banner" width="200"/>
+    <img src="https://github.com/jdpaul123/Desserts/blob/main/DessertsImages/SuccessDessertListView.png" alt="Success State for the Dessert List Screen" width="200"/>
   </p>
 </div>
