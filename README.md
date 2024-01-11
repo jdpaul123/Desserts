@@ -14,7 +14,7 @@ Show the meal name, instructions, and ingredients/measurements of each dessert i
 
 Null values from the API are filtered out in the DataService method getDessertDetails(for:).
 
-The app builds on the latest version of Xcode (15.1) and Swift (5.9)
+The app utalizes SwiftUI and builds on the latest version of Xcode (15.1) and Swift (5.9)
 
 ## Features exceeding requirements:
 
