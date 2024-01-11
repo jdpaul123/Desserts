@@ -53,6 +53,7 @@ https://themealdb.com/api/json/v1/1/lookup.php?i=MEAL_ID
 * A mock version of URLSession is used to isolate the system under test, DefaultNetworkService, and simulate different responses from URLSession.
 * A data stub class is used to provide data for the tests.
 * The tests are focused on making sure that functions work as intended when they succeed and fail gracefully (ex. throw an error).
+* In the future tests can be expanded to the other services and view models. Views can be tested using snapshot testing. The Injector class can be built out further to accomidate injecting mock versions of dependencies for cleaner testing.
 
 ### User Interface
 * Dessert Images: The app loads images in both the DessertListScreen and DessertDetailScreen in order to provide a better user experience. There is logic in the DessertListScreenViewModel to make sure images are only ever loaded once to avoid unnecessary hardware stress and internet data usage.
