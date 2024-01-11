@@ -30,8 +30,6 @@ final class NetworkServiceTests: XCTestCase {
 
     func testGetDesserts_WhenBadHTTPStatusCode_ThrowsInvalidResponse() async {
         // Given
-        let expectedResult = NetworkServiceTestsStub.shared.desserts
-
         let data = try! JSONEncoder().encode(NetworkServiceTestsStub.shared.dessertsDTO)
         let statusCode = 201
         let mockSession = URLSessionMock(expectedResult: (data, HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil)!))
