@@ -10,10 +10,15 @@ import Foundation
 final class Injector {
     static let shared = Injector()
 
-    private let networkService: NetworkService = DefaultNetworkService()
+    private let networkService: NetworkService
     let dataService: DataService
 
-    init() {
-        dataService = DefaultDataService(networkService: networkService)
+    init(networkService: NetworkService = DefaultNetworkService(), dataService: DataService? = nil) {
+        self.networkService = networkService
+        if let dataService {
+            self.dataService = dataService
+        } else {
+            self.dataService = DefaultDataService(networkService: networkService)
+        }
     }
 }
