@@ -17,7 +17,7 @@ struct DessertListCell: View {
     var body: some View {
         HStack {
             // Using Image instead of Async image to avoid calling the API redundantly when scrolling over content that was already loaded
-            Image(uiImage: .init(data: viewModel.imageData)!)
+            viewModel.image
                 .resizable()
                 .frame(width: 115, height: 115)
                 .clipShape(RoundedRectangle(cornerRadius: 10))

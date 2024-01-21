@@ -5,19 +5,21 @@
 //  Created by Jonathan Paul on 1/9/24.
 //
 
-import Foundation
+import SwiftUI
 
 protocol DataService {
     func getDesserts() async throws -> [Dessert]
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails
-    func getImageData(from url: URL) async throws -> Data
+    func getImage(from url: URL) async throws -> Image
 }
 
 final class DefaultDataService: DataService {
     private let networkService: NetworkService
+    private let imageCache: ImageCache
 
-    init(networkService: NetworkService) {
+    init(networkService: NetworkService, imageCache: ImageCache) {
         self.networkService = networkService
+        self.imageCache = imageCache
     }
 
     /// Get all the desserts and sort the data
@@ -34,6 +36,7 @@ final class DefaultDataService: DataService {
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails {
         let dessertDetailsDTO = try await networkService.getDessertDetails(for: dessertID)
 
+        // TODO: Split the instructions into numebred items in the View Model for details
         var instructions: [String] {
             var index = 0
             // Number the instructions on each line break
@@ -46,6 +49,7 @@ final class DefaultDataService: DataService {
             })
         }
 
+        // TODO: Decode the ingredients directly into an array using dynamic Coding Keys?
         var ingredients: [DessertDetails.Ingredient] {
             // When the JSON does not have an ingredient at one of the 20 ingredient properties the value of the property is empty quotes or null value
 
@@ -99,7 +103,7 @@ final class DefaultDataService: DataService {
     }
 
     ///  Get the image data from the url
-    func getImageData(from url: URL) async throws -> Data {
-        try await networkService.getImageData(from: url)
+    func getImage(from url: URL) async throws -> Image {
+        try await imageCache.getImage(from: url)
     }
 }

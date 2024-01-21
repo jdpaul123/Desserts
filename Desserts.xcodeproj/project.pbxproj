@@ -34,6 +34,7 @@
 		5293C9142B4E5F0600A0288A /* DessertListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9132B4E5F0600A0288A /* DessertListCellViewModel.swift */; };
 		5293C9162B4F19E600A0288A /* NetworkException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C9152B4F19E600A0288A /* NetworkException.swift */; };
 		5293C91F2B4F4DF200A0288A /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5293C91E2B4F4DF200A0288A /* NetworkServiceTests.swift */; };
+		52E4A3BE2B5CA10700D7ED0E /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E4A3BD2B5CA10700D7ED0E /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		5293C9152B4F19E600A0288A /* NetworkException.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkException.swift; sourceTree = "<group>"; };
 		5293C91C2B4F4DF200A0288A /* DessertsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DessertsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5293C91E2B4F4DF200A0288A /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
+		52E4A3BD2B5CA10700D7ED0E /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 			isa = PBXGroup;
 			children = (
 				5293C9172B4F1A0500A0288A /* Network */,
+				52E4A3BD2B5CA10700D7ED0E /* ImageCache.swift */,
 				5293C90E2B4E266000A0288A /* DataService.swift */,
 			);
 			path = Services;
@@ -390,6 +393,7 @@
 				5293C90F2B4E266000A0288A /* DataService.swift in Sources */,
 				5211371E2B4CAC2A00491031 /* DessertDetailScreen.swift in Sources */,
 				5293C8FE2B4DBC9700A0288A /* DessertListScreenViewModel.swift in Sources */,
+				52E4A3BE2B5CA10700D7ED0E /* ImageCache.swift in Sources */,
 				5225F0732B4C786900EABDEC /* DessertDetails.swift in Sources */,
 				5293C9092B4DFF0400A0288A /* PullToRefreshView.swift in Sources */,
 				5225F0612B4C70FF00EABDEC /* DessertListScreen.swift in Sources */,

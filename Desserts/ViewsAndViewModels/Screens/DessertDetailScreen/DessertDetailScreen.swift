@@ -32,17 +32,12 @@ struct DessertDetailScreen: View {
                 .banner(data: $viewModel.bannerData, show: $viewModel.showBanner)
         case .success:
             List {
-                AsyncImage(url: viewModel.imageURL) { image in
-                    image
-                        .resizable()
-                } placeholder: {
-                    Image(.no)
-                        .resizable()
-                }
-                .listRowInsets(EdgeInsets())
-                .scaledToFill()
-                .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
-                .clipped()
+                viewModel.image
+                    .resizable()
+                    .listRowInsets(EdgeInsets())
+                    .scaledToFill()
+                    .frame(idealWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height * 0.40)
+                    .clipped()
                 Section {
                     ForEach(viewModel.ingredients) { ingredient in
                         HStack {
