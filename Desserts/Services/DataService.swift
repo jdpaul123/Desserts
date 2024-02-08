@@ -11,11 +11,16 @@ protocol DataService {
     func getDesserts() async throws -> [Dessert]
     func getDessertDetails(for dessertID: String) async throws -> DessertDetails
     func getImage(from url: URL) async throws -> Image
+    func setDessertFavoriteValue(dessertId: String, isFavorite: Bool )
+    var desserts: [Dessert] { get }
 }
 
+// Put the data service in the environment from the top of the list view
+// Another option would be to use Combine
 final class DefaultDataService: DataService {
     private let networkService: NetworkService
     private let imageCache: ImageCache
+    internal var desserts = [Dessert]()
 
     init(networkService: NetworkService, imageCache: ImageCache) {
         self.networkService = networkService
@@ -29,7 +34,15 @@ final class DefaultDataService: DataService {
         // Sort the desserts by name alphabetically
         desserts.sort { $0.name < $1.name }
 
+        self.desserts = desserts
         return desserts
+    }
+
+    func setDessertFavoriteValue(dessertId: String, isFavorite: Bool ) {
+        guard let index = desserts.firstIndex(where: { dessert in
+            dessert.id == dessertId
+        }) else { return }
+        desserts[index].isFavorited = isFavorite
     }
 
     /// Get the details for a dessert and process the data into the model

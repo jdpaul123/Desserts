@@ -15,17 +15,35 @@ struct DessertListCell: View {
     }
 
     var body: some View {
-        HStack {
-            // Using Image instead of Async image to avoid calling the API redundantly when scrolling over content that was already loaded
-            viewModel.image
-                .resizable()
-                .frame(width: 115, height: 115)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            Text(viewModel.name)
+        ZStack {
+            HStack {
+                // Using Image instead of Async image to avoid calling the API redundantly when scrolling over content that was already loaded
+                viewModel.image
+                    .resizable()
+                    .frame(width: 115, height: 115)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                Text(viewModel.name)
+                Spacer()
+            }
+            if viewModel.isFavorited {
+                HStack {
+                    Spacer()
+                        .ignoresSafeArea(edges: .trailing)
+                    VStack {
+                        Label("", systemImage: "heart.fill")
+                            .foregroundStyle(.red)
+                            .clipped()
+                            .padding()
+                            .offset(x: 55, y: -10)
+                        Spacer()
+                    }
+                }
+            }
         }
         .task {
             await viewModel.loadImageIfNeeded()
         }
+        .frame(height: 100)
     }
 }
 
@@ -36,10 +54,11 @@ struct DessertListCellDataStub {
     private let imageURL = URL(string: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg")!
 
     func makeDessertListCellViewModel() -> DessertListCellViewModel {
-        return DessertListCellViewModel(name: name, imageURL: imageURL)
+        return DessertListCellViewModel(name: name, imageURL: imageURL, id: "123")
     }
 }
 
 #Preview {
     DessertListCell(viewModel: DessertListCellDataStub.shared.makeDessertListCellViewModel())
+        .frame(height: 100)
 }

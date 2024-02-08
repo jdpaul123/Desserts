@@ -31,7 +31,7 @@ struct DessertListScreen: View {
             List {
                 ForEach(viewModel.searchResults) { dessert in
                     NavigationLink(destination: DessertDetailScreen(viewModel: DessertDetailScreenViewModel(dessertID: dessert.id, imageURL: dessert.thumbnailURL))) {
-                        DessertListCell(viewModel: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL))
+                        DessertListCell(viewModel: DessertListCellViewModel(name: dessert.name, imageURL: dessert.thumbnailURL, id: dessert.id))
                     }
                     .listRowSeparator(.hidden)
                 }

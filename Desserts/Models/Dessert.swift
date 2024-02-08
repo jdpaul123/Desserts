@@ -17,4 +17,5 @@ struct Dessert: Codable, Identifiable, Equatable {
     let id: String
     let name: String
     let thumbnailURL: URL
+    var isFavorited: Bool = false
 }

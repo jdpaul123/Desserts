@@ -11,9 +11,14 @@ import SwiftUI
 final class DessertListCellViewModel {
     var image: Image
     let name: String
+    var isFavorited: Bool {
+        Injector.shared.dataService.desserts.first(where: {$0.id == id})?.isFavorited ?? false
+    }
+    let id: String
     private let imageURL: URL
 
-    init(name: String, imageURL: URL, image: Image = Image(.no)) {
+    init(name: String, imageURL: URL, image: Image = Image(.no), id: String) {
+        self.id = id
         self.image = image
         self.imageURL = imageURL
         self.name = name

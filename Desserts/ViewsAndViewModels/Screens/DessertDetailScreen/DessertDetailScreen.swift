@@ -63,6 +63,17 @@ struct DessertDetailScreen: View {
                         .font(.title2)
                 }
             }
+            .navigationBarItems(trailing: Button(action: {
+                viewModel.isFavorited.toggle()
+            }, label: {
+                if viewModel.isFavorited {
+                    Label("heart", systemImage: "heart.fill")
+                        .foregroundStyle(.red)
+                } else {
+                    Label("heart", systemImage: "heart")
+                        .foregroundStyle(.red)
+                }
+            }))
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(viewModel.name)
         }

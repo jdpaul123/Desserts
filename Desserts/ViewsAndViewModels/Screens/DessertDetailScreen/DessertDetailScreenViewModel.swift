@@ -11,6 +11,11 @@ import SwiftUI
 final class DessertDetailScreenViewModel {
     private let id: String
     private let imageURL: URL
+    var isFavorited: Bool = false {
+        didSet {
+            Injector.shared.dataService.setDessertFavoriteValue(dessertId: id, isFavorite: isFavorited)
+        }
+    }
     var image: Image
     var name: String
     var instructions: [String]
